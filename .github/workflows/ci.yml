@@ -1,4 +1,4 @@
-# CI for Digital Mill Lab. Status: configured, not yet run on GitHub (no remote run evidence).
+# CI for Digital Mill Lab. First GitHub run: 2026-11-22 (the api job passed; see the run history for current status).
 name: ci
 
 on:
@@ -66,9 +66,8 @@ jobs:
         with:
           name: openapi
           path: packages/contracts
+      # pnpm version comes from the packageManager field in package.json (specifying it here too is an error)
       - uses: pnpm/action-setup@v4
-        with:
-          version: 11
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -86,3 +85,33 @@ jobs:
             pnpm --filter ./apps/web run --if-present test
             pnpm --filter ./apps/web run build
           else echo "apps/web not built yet - skipped"; fi
+
+  # Docker images are built and smoke-tested here (GitHub runners have Docker and 7 GB RAM; seeding the dataset needs ~1 GB).
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image (dataset is seeded and models are trained at build time)
+        run: docker build -f infra/docker/api.Dockerfile -t dml-api .
+      - name: Build web image
+        run: docker build -f infra/docker/web.Dockerfile -t dml-web .
+      - name: Smoke test - API serves data, web proxies to it
+        run: |
+          docker network create dml
+          docker run -d --name api --network dml -p 8000:8000 dml-api
+          docker run -d --name web --network dml -p 3000:3000 dml-web
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8000/health >/dev/null 2>&1 && break; sleep 2; done
+          curl -fsS http://127.0.0.1:8000/health
+          curl -fsS http://127.0.0.1:8000/api/v1/meta | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'Digital Mill Lab' in json.dumps(d), d"
+          curl -fsS -H "X-Demo-Role: executive" "http://127.0.0.1:8000/api/v1/executive/kpis?as_of=2026-11-20T08:00:00Z&period=7d" | python3 -c "import json,sys; d=json.load(sys.stdin); assert len(d['kpis'])==12, len(d['kpis']); print('12 KPIs from the image')"
+          curl -fsS -H "X-Demo-Role: executive" "http://127.0.0.1:8000/api/v1/alerts?as_of=2026-11-20T08:00:00Z&limit=5" | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['total']>0; print('alerts:', d['total'])"
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:3000/ >/dev/null 2>&1 && break; sleep 2; done
+          curl -fsS http://127.0.0.1:3000/ | grep -q "Digital Mill Lab"
+          curl -fsS http://127.0.0.1:3000/api/v1/meta | python3 -c "import json,sys; json.load(sys.stdin); print('web proxy to api OK')"
+          curl -fsS http://127.0.0.1:3000/docs/architecture | grep -qi "architecture"
+      - name: Container logs on failure
+        if: failure()
+        run: |
+          docker logs api 2>&1 | tail -40 || true
+          docker logs web 2>&1 | tail -40 || true

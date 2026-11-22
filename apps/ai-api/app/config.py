@@ -63,6 +63,13 @@ class Settings(BaseSettings):
     # SQLite WAL + busy timeout for file databases. OFF by default: switching to WAL rewrites the database file header, which
     # development and tests must not do to the canonical data/demo.db. The Docker entrypoint turns it on for multi-worker serving.
     sqlite_wal: bool = False
+    # POST /demo/reset-all clears EVERY visitor's sandbox. The simulated role header is not authentication, so on a public
+    # deployment (APP_ENV=demo|production) it is refused unless ALLOW_RESET_ALL=true; development and tests keep it available.
+    allow_reset_all: bool | None = None
+
+    @property
+    def reset_all_allowed(self) -> bool:
+        return self.allow_reset_all if self.allow_reset_all is not None else self.app_env in ("development", "test")
     # number of trusted proxies that each append to X-Forwarded-For in front of the API (e.g. TLS proxy -> Next.js = 2)
     trusted_proxy_hops: int = Field(default=1, ge=1, le=5)
 

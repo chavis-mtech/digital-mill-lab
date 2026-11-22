@@ -193,3 +193,41 @@ median 252 ms with 4 workers vs 539 ms with 1, on the busy machine), put a short
   any visitor can clear the sandboxes).
 * `audit_logs` is append-only and is not cleared by resets; it grows with visitor activity (verification is incremental above 20,000 rows).
   To start fresh, rebuild the database.
+
+## 11. Public demo: Vercel (web) + a container host (API) — written, NOT yet deployed
+
+**Why two hosts.** Vercel runs the Next.js web app. It cannot run the API: the API needs Python with pandas/scikit-learn and a ~160 MB SQLite
+database, which exceeds the size limits of Vercel's functions. The API therefore runs as a container on another host, and the web app proxies
+`/api/v1/*` to it (same origin for the browser, so no CORS).
+
+**Measured memory (peak resident set, author's machine):** seeding the dataset ~940 MB, training the models ~350 MB, API at run time ~240 MB
+(one worker). Seeding and training happen when the image is *built*. A 512 MB host can therefore run the API but may fail to build it.
+
+### Step 1 — the API (container host; `render.yaml` is provided for Render)
+1. Wait for the CI `docker` job to be green: it builds both images on GitHub's runners and smoke-tests them (health, 12 KPIs, alerts, web proxy).
+2. Render: *New → Blueprint* → pick the repository → it reads `render.yaml`. Free plan: sleeps after ~15 minutes idle (about a minute to wake;
+   the first visitor after a quiet period waits). A paid plan keeps it awake.
+3. Note the service URL, for example `https://digital-mill-lab-api.onrender.com`. Check `<url>/health` and `<url>/api/v1/meta`.
+4. **Plan B if the image build is killed for memory:** build the image in CI (it already is) and deploy it from a registry instead of building on the
+   host, or choose a plan with more build memory. Not tried.
+
+### Step 2 — the web app (Vercel)
+1. *Add New → Project* → import the repository (grant the Vercel GitHub app access to it).
+2. **Root Directory:** `apps/web`. Keep *Include source files outside of the Root Directory* ON (the app needs `packages/contracts` and `docs/`).
+   Framework: Next.js. Node.js version: 22.x. Install/build commands: defaults (pnpm is detected).
+3. **Environment variable `API_INTERNAL_URL`** = the API URL from step 1 (Production and Preview). It is baked into the build, so set it **before**
+   the first deployment; changing it later needs a redeploy.
+4. Deploy. `next.config.ts` detects Vercel (`VERCEL=1`), turns off `standalone`, and includes the markdown files the `/docs` pages read
+   (`docs/internal` is excluded; verified locally by inspecting the traced file lists).
+
+### After deploying
+* Open `/`, `/demo/executive` (data should appear within a few seconds; the very first call can be slow if the API was asleep), run the tour.
+* Run the browser tests against the public URL: `E2E_BASE_URL=https://<your-vercel-domain> pnpm --dir tests/e2e exec playwright test` (they create and reset
+  their own sandbox sessions).
+* Rate limiting is per process and per session; behind the web proxy every visitor shares one client address, so keep `TRUST_PROXY_HEADERS=false`
+  (already set in `render.yaml`). `POST /demo/reset-all` is refused when `APP_ENV=demo` (it would let any visitor clear everyone's sandbox).
+* Vercel *Deployment Protection* may put preview URLs behind a login; production domains are public. The demo is intended to be public.
+
+### Not verified
+Never deployed on Vercel or Render by the author. Unknown until tried: Render's build memory limit, cold-start time, whether the `/docs` pages find their
+files inside Vercel's function bundle (configured and checked locally, not on Vercel), and Vercel's handling of the monorepo settings above.

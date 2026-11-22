@@ -1,0 +1,33 @@
+# Render Blueprint for the API (the web app goes to Vercel; see docs/DEPLOYMENT.md section 9).
+# STATUS: written from the Docker image that CI builds and smoke-tests; NEVER deployed on Render by the author.
+#
+# Memory facts measured on the author's machine (peak resident set):
+#   dataset seeding  ~940 MB   (happens while the image is BUILT, not at run time)
+#   model training   ~350 MB   (also at image build time)
+#   API at run time  ~240 MB   (one worker, after serving real requests)
+# A 512 MB plan can RUN the API but may not be able to BUILD the image. If the build is killed, either use a plan with more
+# build memory, or build the image in CI and deploy it from a registry (docs/DEPLOYMENT.md section 9, "Plan B").
+services:
+  - type: web
+    name: digital-mill-lab-api
+    runtime: docker
+    dockerfilePath: ./infra/docker/api.Dockerfile
+    dockerContext: .
+    plan: free            # sleeps after ~15 min idle (about a minute to wake). Use a paid plan for an always-on demo.
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "8000"     # the image listens on 8000
+      - key: WEB_CONCURRENCY
+        value: "1"        # one worker keeps memory low; raise on a bigger plan
+      - key: APP_ENV
+        value: demo
+      - key: DEMO_MODE
+        value: "true"
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
+      - key: TRUST_PROXY_HEADERS
+        value: "false"    # the web host proxies every request, so the client address is not trustworthy; per-session limits still apply
+      - key: LLM_PROVIDER
+        value: none       # no paid API; the deterministic Copilot mode is used

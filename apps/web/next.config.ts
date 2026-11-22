@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import fs from "node:fs";
 import path from "node:path";
 
 /**
@@ -9,9 +10,25 @@ import path from "node:path";
  */
 const apiTarget = (process.env.API_INTERNAL_URL ?? `http://127.0.0.1:${process.env.API_PORT ?? "8000"}`).replace(/\/$/, "");
 
+// Documentation files the /docs pages may render (everything under docs/ except the private `internal` folder).
+const docsDir = path.join(import.meta.dirname, "../../docs");
+const docsIncludes = fs.existsSync(docsDir)
+  ? [
+      "../../docs/*.md",
+      ...fs.readdirSync(docsDir, { withFileTypes: true }).filter((d) => d.isDirectory() && d.name !== "internal").map((d) => `../../docs/${d.name}/**/*`),
+    ]
+  : [];
+
+// On Vercel the platform builds its own serverless bundles; `standalone` is for the Docker image only.
+const onVercel = Boolean(process.env.VERCEL);
+
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: onVercel ? undefined : "standalone",
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
+  // The /docs pages read the repository's markdown at request time (features/docs/load.ts opts out of tracing), so on a
+  // serverless platform those files must be included in the function bundle explicitly. Folders are listed one by one so
+  // that `docs/internal` (private notes, git-ignored) can never be matched, even in a local checkout that has it.
+  outputFileTracingIncludes: { "/docs/*": docsIncludes, "/docs/**/*": docsIncludes },
   reactStrictMode: true,
   poweredByHeader: false,
   typedRoutes: false,

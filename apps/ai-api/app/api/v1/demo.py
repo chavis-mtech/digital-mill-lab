@@ -9,13 +9,14 @@ from __future__ import annotations
 import uuid
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.api.v1._contract import STD_RESPONSES, contract
 from app.config import Settings, get_settings
 from app.db.session import get_db
 from app.deps import require_permission
+from app.errors import forbidden
 from app.models.enums import Role
 from app.schemas.common import DemoContextOut
 from app.schemas.demo import (
@@ -90,7 +91,10 @@ def reset_session(ctx: DemoContext = Depends(_session), db: Session = Depends(ge
 
 @router.post("/reset-all", response_model=ResetAllResponse, summary="Admin: clear all visitor sessions",
              openapi_extra=contract(P.demo_reset_all, OWNER, "DML-034", status="implemented"))
-def reset_all(ctx: DemoContext = Depends(require_permission(P.demo_reset_all)), db: Session = Depends(get_db)):
+def reset_all(request: Request, ctx: DemoContext = Depends(require_permission(P.demo_reset_all)), db: Session = Depends(get_db)):
+    settings = getattr(request.app.state, "settings", None) or get_settings()
+    if not settings.reset_all_allowed:
+        forbidden("Clearing every visitor's sandbox is disabled on this deployment (set ALLOW_RESET_ALL=true to enable it).")
     return demo_state.reset_all(db, ctx)
 
 

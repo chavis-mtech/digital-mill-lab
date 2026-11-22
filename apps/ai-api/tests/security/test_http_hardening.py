@@ -217,3 +217,22 @@ def test_server_errors_use_the_envelope_and_hide_the_cause(hc, monkeypatch):
     r = hc.get("/api/v1/executive/kpis", params=P, headers=hdr("public_viewer"))
     err = assert_clean_error(r, status=500, code="internal_error")
     assert "secret" not in json.dumps(err) and err["details"] is None and "Traceback" not in r.text
+
+
+def test_reset_all_is_disabled_on_a_public_deployment_unless_explicitly_allowed():
+    """The simulated role header is not authentication: on APP_ENV=demo the all-visitors reset must be refused.
+    (The default test database is empty, so the permitted cases are checked as "not refused with 403", not as 200.)"""
+    from fastapi.testclient import TestClient
+
+    from app.main import create_app
+    from tests.conftest import make_settings
+
+    hdr = {"X-Demo-Role": "system_admin", "X-Demo-Session": "11111111-1111-4111-8111-111111111111"}
+    public = TestClient(create_app(make_settings(app_env="demo")), raise_server_exceptions=False)
+    r = public.post("/api/v1/demo/reset-all", headers=hdr)
+    assert r.status_code == 403 and "disabled" in r.text
+    for settings in (make_settings(app_env="demo", allow_reset_all=True), make_settings(app_env="development"), make_settings(app_env="test")):
+        c = TestClient(create_app(settings), raise_server_exceptions=False)
+        assert c.post("/api/v1/demo/reset-all", headers=hdr).status_code != 403
+    assert make_settings(app_env="production").reset_all_allowed is False
+    assert make_settings(app_env="production", allow_reset_all=True).reset_all_allowed is True
