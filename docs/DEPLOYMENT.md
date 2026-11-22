@@ -1,7 +1,7 @@
 # Deployment — Digital Mill Lab
 
 > Independent portfolio / concept demo on synthetic data. Status date 2026-11-22.
-> **Verified:** local run (README quick start, proven from a clean copy). **Configured but never run/built:** Docker images and
+> **Verified:** local run (README quick start, proven from a clean copy). **Built and run only on GitHub Actions (2026-11-22, all jobs green; not on the author's machine):** Docker images and
 > compose (no Docker daemon on the build machine), GitHub Actions CI (no remote run), PostgreSQL (offline DDL only).
 > **No public deployment exists.** Hosting provider, domain and cost are the owner's decision — this document picks nothing
 > and nothing was provisioned.
@@ -102,7 +102,7 @@ same via the LAN interface address  -> unchanged (no peer address appended)
 Web (build/run time): `API_INTERNAL_URL` (rewrite target, baked at build), `API_PORT` (fallback target port), `PORT` (web port),
 `DOCS_ROOT` (folder with the repo `docs/` that the in-app /docs pages read at run time).
 
-## 5. Docker / compose (configured, NEVER built)
+## 5. Docker / compose (images built and smoke-tested in CI; compose file not run)
 
 `infra/docker/api.Dockerfile`, `web.Dockerfile`, `docker-compose.yml`, `api-entrypoint.sh`. The API image seeds the dataset and trains the
 models at build time. None of this has been built or run: there is no Docker daemon on the build machine. Issues found by reading
@@ -116,10 +116,10 @@ models at build time. None of this has been built or run: there is no Docker dae
    The API image also runs a single uvicorn process (see §8 for why `--workers 2-4` is advisable).
 4. PostgreSQL profile: needs `psycopg[binary]` in the image; never run.
 
-## 6. GitHub Actions (configured, NEVER run)
+## 6. GitHub Actions (ran on GitHub 2026-11-22: all three jobs green)
 
 `.github/workflows/ci.yml`: lint, migrations on a fresh SQLite DB, seed + validate, train into `data/dev/ml.db`, `pytest`, OpenAPI export,
-contract-type drift check, web typecheck/lint/test/build. It parses as valid YAML; it has never run on GitHub. With the 2026-11-22 change the
+contract-type drift check, web typecheck/lint/test/build. It ran on GitHub on 2026-11-22 (commit 23b77ad): backend job, contracts + web job and a Docker job (builds both images, starts them on one network, checks health, 12 KPIs, alerts and the web proxy) all passed. With the 2026-11-22 change the
 QA suites pick up `data/dev/ml.db`, so they run instead of skipping in CI.
 
 ## 7. PostgreSQL (NOT verified)

@@ -37,7 +37,7 @@
 | Built an industrial operations **Copilot** with allow-listed tools, role checks, a grounding verifier, retrieval with citations, a deterministic mode and an evaluation harness | CM-30a, CM-30b | Use with caveats: evaluation re-run (grounded 45 of 45; unauthorised refused 23 of 23; injections refused 26 of 26); it answers about half of fresh paraphrases correctly; the LLM mode has been tested only with a fake provider |
 | Built a **7-step guided executive tour** | CM-32 | Use: the tour is covered by end-to-end tests |
 | Eight **model cards** and a documented **leakage audit** with causality tests | CM-21, CM-22 | Use: leakage tests are in the full suite run |
-| Containerised with Docker and automated with GitHub Actions CI | CM-36 | Do not use: configured, never built or run |
+| Containerised with Docker (images built and smoke-tested in CI) and automated with GitHub Actions CI | CM-36 | Usable, with this precision: images were built and tested on GitHub Actions, not deployed |
 | End-to-end acceptance tests (Playwright) for five scenarios | CM-35 | Use: 20 Playwright tests pass (scenarios A to E) |
 | Deployed a public demo at a stable URL | CM-37 | Do not use: not deployed |
 | Computer-vision FFB prototype with safe upload handling | CM-23 | Use only as "research prototype, no accuracy claimed" |

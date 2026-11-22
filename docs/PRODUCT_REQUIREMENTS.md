@@ -211,7 +211,7 @@ Real company data or systems; production authentication/identity; real-time plan
 | R-06 | Outreach tone and timing | A proposal could land at an inopportune moment | Owner decides timing and tone; see private owner notes (not published); do not model or reference non-product context |
 | R-07 | Public demo abused (spam, uploads, prompt injection) | Outage, bad content | Rate limits, validation, safe uploads, injection tests, session scoping |
 | R-08 | LLM cost, availability or key leakage | Copilot downtime | Deterministic no-API mode default; adapter optional; no keys in repo |
-| R-09 | Docker/Postgres not verifiable locally | Unverified deployment claims | Label "configured, not verified" until verified |
+| R-09 | Docker/Postgres not verifiable locally | Unverified deployment claims | Docker images verified in CI (2026-11-22); label anything else "configured, not verified" until verified |
 | R-10 | Invented personal or résumé facts | Credibility and legal risk | Facts only from the applicant's own README; placeholders plus TODO |
 | R-11 | Misleading ROI | Overclaiming | Illustrative disclaimer, adjustable inputs, separate bases, sensitivity |
 | R-12 | Thai language quality | Poor first impression | TH/EN dictionaries reviewed by a Thai speaker (owner action) |

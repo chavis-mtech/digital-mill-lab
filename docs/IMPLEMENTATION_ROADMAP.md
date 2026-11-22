@@ -180,7 +180,7 @@ components of any company system.
 | Illustrative ROI with no double counting | Recomputed by hand | verified (CM-13) |
 | Executive, maintenance and logistics screens; Copilot core | Built; covered by 20 end-to-end scenario tests and the full suite (1,139 passed) | Verified; the Copilot answers about half of fresh paraphrases correctly |
 | Other screens, Copilot evaluation and page, guided tour | Digital twin, palm-mill, scenario and business-impact pages built; energy page partial; Copilot evaluation re-run; tour covered by the end-to-end tests | Energy page partial; Copilot LLM mode tested only with a fake provider |
-| Container build and CI | Configured, never built or run | **[PENDING VERIFICATION · CM-36: Docker build and GitHub Actions run not yet performed]** |
+| Container build and CI | Built and run on GitHub Actions (2026-11-22): all jobs green, incl. a Docker smoke test | Not deployed; compose file not run |
 
 ## 14. What is not in this roadmap
 

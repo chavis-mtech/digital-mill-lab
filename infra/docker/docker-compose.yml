@@ -1,4 +1,4 @@
-# STATUS: configured, NOT verified (Docker daemon unavailable in the build environment).
+# STATUS: the images build and pass a smoke test in GitHub Actions CI (2026-11-22); this file itself was not run.
 # Default: SQLite inside the api container.   docker compose -f infra/docker/docker-compose.yml up --build
 # PostgreSQL:                                  docker compose -f infra/docker/docker-compose.yml --profile postgres up --build
 #   (and set DATABASE_URL=postgresql+psycopg://dml:dml@db:5432/dml_demo, plus add psycopg[binary] to the API image)

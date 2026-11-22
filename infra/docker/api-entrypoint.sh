@@ -1,5 +1,5 @@
 #!/bin/sh
-# API container entrypoint. STATUS: configured, NOT verified (no Docker daemon in the build environment).
+# API container entrypoint. STATUS: built and smoke-tested in GitHub Actions CI (2026-11-22).
 set -e
 
 case "${DATABASE_URL:-}" in

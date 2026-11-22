@@ -42,7 +42,7 @@ Basis: the engineering log (kept private), section "FINAL INTEGRATION RESULTS" (
 | CM-30b | `verified` (evaluation); LLM mode `partial` | evaluation numbers in section 3; LLM mode tested only with a fake provider; no real model called |
 | CM-32 | `verified` | tour e2e checks E1 and E2; the "5 minutes" is a design target |
 | CM-35 | `verified` | 1,139 passed, 2 skipped; 20 e2e passed |
-| CM-36 | `claimed-by-agent` (never built or run) | no Docker build, no GitHub Actions run |
+| CM-36 | `verified` (GitHub Actions run, 2026-11-22) | Docker images built and smoke-tested in CI; all CI jobs green |
 | CM-37 | `not built` | no public deployment (owner decision) |
 
 Owner decisions still open (not changed by this round): role and hands-on wording (TODO), Thai copy review and pronouns, phone publication, résumé PDF, LinkedIn, dates, hosting and domain.
@@ -115,7 +115,7 @@ Owner decisions still open (not changed by this round): role and hands-on wordin
 | ID | Capability and claim | Status | Evidence pointer | Caveat |
 |---|---|---|---|---|
 | CM-35 | **Automated tests** | `verified` | Python: 334 passed, 26 skipped (ML tests waiting for trained models), 0 failed (orchestrator re-run 2026-11-22). Web: 6 vitest tests. `ruff` clean (at architect acceptance) | Agent-reported later totals (359, then 362 passed with 1 skipped, ML agent) are `claimed-by-agent`. Playwright end-to-end tests for acceptance scenarios A to E are `not built` (QA, R6). ML tests skip on a clean checkout until `make models` has run |
-| CM-36 | **Docker images, compose file and GitHub Actions CI** | `claimed-by-agent` (configured, never run) | `infra/docker/*`, `.github/workflows/ci.yml`; orchestrator log item 19 and item 8: no Docker daemon, no GitHub run; `ci.yml` parses as valid YAML | Do not write "CI passes" or "containerised and tested" anywhere |
+| CM-36 | **Docker images and GitHub Actions CI** | `verified` | GitHub Actions run on commit 23b77ad: jobs `api`, `contracts-and-web`, `docker` all `success` | The docker-compose file itself was not run; nothing is deployed; do not claim 'deployed' |
 | CM-37 | **Public deployment** | `not built` | Orchestrator R12: owner decision on hosting, cost and domain | No live demo URL exists. Every document uses the placeholder `[DEMO_URL - not deployed yet]` |
 | CM-38 | **Technical documentation set** (SPEC section 16 list) | mixed | Present and checked: SPEC, the build plan, DECISIONS (17 ADRs), architecture/*, DATA_GENERATION, AI_MODELS, MODEL_EVALUATION, business/*, BUSINESS_RESEARCH, PRODUCT_REQUIREMENTS (researcher, data-engine and ML docs accepted or reproduced by the orchestrator). Present but unreviewed: the portfolio set written by this agent. **Not built yet:** final README (draft only), SECURITY, DEPLOYMENT, DEMO_GUIDE, KNOWN_LIMITATIONS, API_DOCUMENTATION, TASKS | Generated docs (`API_CONTRACT.md`, `DATABASE_SCHEMA.md`) need regeneration (orchestrator open item 1) |
 
@@ -144,7 +144,7 @@ Quote these only with the words "synthetic" or "illustrative" beside them. Sourc
 2. **No connection to any real system.** ERP, MES, SCADA, PLC, OPC UA, MQTT, weighbridge, LIMS and fleet connections exist only as written contracts for the future.
 3. **Several ML models do not beat their baselines** (OER forecast, energy forecast, energy anomaly, arrival forecast; queue time only marginally). They are reported that way. Good results on the prescribed press-bearing episode do not transfer to real bearings.
 4. **No production deployment evidence.** There is no public URL, no load test, no uptime record and no operations history.
-5. **Docker and CI are configured, never run.** PostgreSQL has been checked only as offline DDL.
+5. **Docker images and CI passed on GitHub Actions (2026-11-22); nothing is deployed and the compose file was not run.** PostgreSQL has been checked only as offline DDL.
 6. **ROI is illustrative.** It is an adjustable scenario on stated assumptions, not a forecast and not a result for any company.
 7. **Risk scores are not calibrated probabilities.** The failure-risk index is a ranking. Anomalies list possible contributing factors, not proven causes. Logistics flags are review prompts, never accusations.
 8. **The AI is advisory and read-only.** It does not control any machine or change business records without human confirmation.

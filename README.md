@@ -9,7 +9,7 @@ Copilot — all computed by one Python API from a 120-day synthetic dataset with
 advisory and read-only: it never controls machines, and roles are simulated viewpoints, not real accounts.
 
 What this demo is **not**: it is not connected to any real system, it has no public deployment yet, several models do not beat
-their naive baselines (and say so), and Docker/CI/PostgreSQL are configured but unverified. See
+their naive baselines (and say so), and the CI and Docker images were built and smoke-tested on GitHub Actions (PostgreSQL and any public deployment are not verified). See
 [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 
 ## Quick start (local, macOS / Linux)
@@ -71,8 +71,8 @@ packages/contracts/   generated OpenAPI + TypeScript API types
 data/kb/              sample knowledge-base documents for the Copilot (fictional)
 data/models/          trained model artifacts (rebuilt by make models)
 data/synthetic/       dataset manifest (checksum, episode windows)
-infra/docker/         Dockerfiles + compose (configured, NOT verified)
-.github/workflows/    CI (configured, never run)
+infra/docker/         Dockerfiles + compose (images built and smoke-tested in CI; the compose file itself was not run)
+.github/workflows/    CI (all jobs green on GitHub, 2026-11-22)
 docs/                 product, architecture, AI, security and portfolio documentation
 ```
 
@@ -86,7 +86,7 @@ docs/                 product, architecture, AI, security and portfolio document
 | ML: anomaly detection, forecasts, failure-risk ranking | implemented; OER, energy and arrival forecasts do **not** beat baselines |
 | Copilot (deterministic router, grounded answers, refusals) | implemented; LLM mode never run against a real provider |
 | CV FFB grading | prototype (no dataset, no accuracy) |
-| Docker, CI, PostgreSQL | configured, not verified |
+| Docker images, CI | built and passing on GitHub Actions (2026-11-22); docker-compose file and PostgreSQL not verified |
 | Public deployment | not done (owner decision: hosting, domain, cost) |
 
 Test evidence and open defects: [SECURITY](docs/SECURITY.md) and [KNOWN_LIMITATIONS](docs/KNOWN_LIMITATIONS.md).

@@ -43,7 +43,7 @@ Evidence rule: "verified" = the orchestrator ran the check himself (log: the eng
 ## 5. Partial / not implemented (honest list)
 - **Queue simulation (AI-D03)** is not calibrated: it does not reproduce the observed congestion (FIFO replay 7.3 vs 37.4 min observed); the UI shows both with a warning.
 - **LLM mode** of the Copilot was only tested with a fake provider; no real LLM provider was ever called.
-- **PostgreSQL**: DDL checked offline only. **Docker images/compose and GitHub Actions: configured, NEVER built or run** (no Docker daemon here; repository not published).
+- **PostgreSQL**: DDL checked offline only. **Docker images and CI**: built and run on GitHub Actions on 2026-11-22 (all three jobs green incl. a Docker smoke test); the docker-compose file itself and any deployment are not verified.
 - **Performance**: single-process API queues ~20 parallel page requests; multi-worker Docker setup (`WEB_CONCURRENCY`, WAL) is configured but unmeasured (QA-22 open).
 - **Not built**: server-side PDF export (HTML print + CSV only), computer-vision grading (research prototype only, no accuracy), P2 concepts (plantation, petroleum, port, group data platform = concept cards, no outputs).
 - API narrative text (insights/alert titles) is English-only on the Thai UI; Thai copy not reviewed by a native speaker; ML artifacts trained once (in-sample before 2026-10-15).

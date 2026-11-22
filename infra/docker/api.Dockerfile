@@ -1,5 +1,5 @@
-# API image. STATUS: configured, NOT verified (Docker daemon unavailable in the build environment).
-# Build from repo root:  docker build -f infra/docker/api.Dockerfile -t pc-api .
+# API image. STATUS: built and smoke-tested in GitHub Actions CI (2026-11-22).
+# Build from repo root:  docker build -f infra/docker/api.Dockerfile -t dml-api .
 #
 # The synthetic dataset and the trained models are generated at BUILD time (both are deterministic:
 # `python -m app.seed` then `python -m app.ml.train`, ~10 s + ~90 s on a multi-core machine), so the container

@@ -72,8 +72,8 @@ calculator read those same rows at the same `as_of`.
 | Item | Status |
 |---|---|
 | Local: `make setup && make seed && make dev` | setup/test implemented; seed planned (data-engine) |
-| Docker: `infra/docker/{api,web}.Dockerfile`, `docker-compose.yml` (+ `postgres` profile) | **configured, not verified** (no Docker daemon on build machine) |
-| CI: `.github/workflows/ci.yml` (lint, migrations, tests, contract freshness, web build) | configured, not yet run on GitHub |
+| Docker: `infra/docker/{api,web}.Dockerfile`, `docker-compose.yml` (+ `postgres` profile) | images **built and smoke-tested in CI** (2026-11-22); compose file and Postgres profile not run |
+| CI: `.github/workflows/ci.yml` (lint, migrations, tests, contract freshness, web build, Docker build + smoke test) | ran on GitHub 2026-11-22, all jobs green |
 | Public demo hosting | planned |
 
 ## Security posture (demo)

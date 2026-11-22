@@ -116,12 +116,12 @@ older row is caught by a full walk (`verify_chain`, `python -m app.seed.validate
 | QA-16 (rest) | Equipment health risk sub-score, recommendation priority, scenario catalogue counts and the Copilot `open_alerts` tool still read the STORED (episode-peak) severity of ML alerts; `/alerts`, executive and twin views are fixed. Proper fix: write severity as known at `detected_at` in `app/ml/train.py` before the final data rebuild |
 | Rate limiter is in-process | One API process only; several replicas need a shared store (Redis). The per-IP limit is weak behind shared NAT / mobile carriers; the per-session limit is easy to evade by rotating session ids (each new id gets a fresh bucket) — it limits honest heavy use, not attackers. The per-IP bucket is the only abuse brake, and only as good as the proxy-hop configuration (DEPLOYMENT.md) |
 | Admin-only actions are only "simulated admin" | Because roles are headers, any visitor can send `X-Demo-Role: system_admin` and call `POST /demo/reset-all` (clears every visitor sandbox; seeded data and audit log are untouched). Block this path at the proxy in a public deployment, or accept it |
-| QA-21 (config) | `infra/docker/docker-compose.yml` sets `TRUST_PROXY_HEADERS=true` although Next.js (the only hop) does not append `X-Forwarded-For`: the per-IP key becomes client-chosen. Not fixed (infra file, never run); DEPLOYMENT.md §3/§5 give the correct values |
+| QA-21 (config) | `infra/docker/docker-compose.yml` sets `TRUST_PROXY_HEADERS=true` although Next.js (the only hop) does not append `X-Forwarded-For`: the per-IP key becomes client-chosen. **Fixed 2026-11-22:** the compose file now defaults `TRUST_PROXY_HEADERS` to `false` (override only behind a reverse proxy that appends the client address; DEPLOYMENT.md §3/§5). The compose file itself was not run; the CI smoke test runs the images directly |
 | No WAF, bot protection, CAPTCHA, request signing | Not implemented; would be the hosting layer's job |
 | HSTS / TLS | Not set by the app; must be done by the TLS reverse proxy (DEPLOYMENT.md) |
 | Dependency scanning / SBOM | Not set up; versions are pinned in `requirements.lock` / `pnpm-lock.yaml` |
 | Penetration test by a human | Not done. All findings above come from automated tests written by AI agents (QA phase A/B) |
-| Docker images, CI, PostgreSQL | Configured, never built / run / verified (no Docker daemon, no GitHub run, no Postgres server) |
+| Docker images, CI, PostgreSQL | Images and CI passed on GitHub Actions (2026-11-22); docker-compose file, PostgreSQL and any public deployment not verified |
 
 ## 6. Reporting
 

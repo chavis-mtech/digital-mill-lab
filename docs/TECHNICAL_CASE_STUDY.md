@@ -23,7 +23,7 @@ baselines on a later held-out period, and turns operational improvement into a t
 | ROI simulator | Four cases, no double counting, arithmetic recomputed by hand | `verified` (CM-13) |
 | Executive page; maintenance, equipment and work-order pages; logistics page; Copilot core | Built; covered by 20 end-to-end scenario tests (scenarios A to E), the full suite (1,139 passed) and orchestrator browser checks of the executive page | Verified (CM-24, CM-28, CM-29a, CM-30a). The Copilot answers about half of fresh paraphrases correctly and asks for clarification in about a third |
 | Other screens, Copilot evaluation and page, guided tour | Digital twin, palm-mill, scenario-simulator and business-impact pages built; traceability built and tested in the suite; energy page partial; Copilot evaluation re-run; guided tour runs in the end-to-end tests | Energy page is partial and checked only by agent browser runs (CM-29b). The Copilot LLM mode is tested only with a fake provider (CM-30b). The tour's "5 minutes" is a design target, not a timed measurement (CM-32) |
-| Deployment | Docker images and CI configured, never built or run; no public URL | **[PENDING VERIFICATION · CM-36: Docker build and GitHub Actions run not yet performed]**; no public deployment (CM-37) |
+| Deployment | Docker images and CI built and run on GitHub Actions (2026-11-22, all jobs green incl. a Docker smoke test); not run on the author's machine; no public URL | no public deployment (CM-37) |
 
 **How it was built (disclosure).** The project was designed, directed and reviewed by the applicant with AI coding
 agents working under written ownership boundaries, a shared specification and a rule that a task counts as done only
@@ -379,7 +379,7 @@ Commands (from the repository root): `make setup`, `make seed`, `make models` (o
 2. No connection to any real system; integration contracts are specifications only.
 3. Several ML models do not beat baselines; strong results use a prescribed degradation curve.
 4. Risk scores are rankings, not probabilities; anomalies are not proven causes; logistics flags are not accusations.
-5. No production deployment, load test, uptime record or operations history; Docker and CI are configured, never run.
+5. No production deployment, load test, uptime record or operations history; Docker and CI passed on GitHub Actions but nothing is deployed.
 6. ROI is illustrative on adjustable assumptions.
 7. Roles are simulated; the audit chain is tamper-evident only.
 8. Several module screens, the Copilot evaluation and parts of the guided tour were not complete at writing time (CM-25 to CM-27, CM-29b, CM-30b, CM-32); the executive, maintenance and logistics pages and the Copilot core are agent-reported only (CM-24, CM-28, CM-29a, CM-30a).

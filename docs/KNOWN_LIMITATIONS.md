@@ -70,8 +70,8 @@
 
 * **No real integrations.** No SCADA/DCS/historian, ERP, weighbridge, LIMS or SSO connection. Integration contracts in
   `docs/architecture/INTEGRATION_CONTRACTS.md` are future designs.
-* **No deployment evidence.** No public URL exists. Docker images/compose are configured but were **never built** (no Docker
-  daemon on the build machine); the GitHub Actions workflow was **never run**; PostgreSQL support is only checked as offline DDL.
+* **No deployment evidence.** No public URL exists. The Docker images were built and smoke-tested only on GitHub Actions (2026-11-22), not on the author's machine; the
+  docker-compose file itself was never run; PostgreSQL support is only checked as offline DDL.
   Hosting, domain and cost are the owner's decision.
 * **Single-process performance.** Heavy analytics endpoints (overview, KPIs, twin, equipment list, recommendations) take 75–210 ms alone but
   drop to 0.4–0.7 requests/s at 10 concurrent requests in one process (p50 15–23 s), measured on a shared, heavily loaded machine (QA-22,

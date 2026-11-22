@@ -1,6 +1,6 @@
-# Web image (Next.js). STATUS: configured, NOT verified (Docker daemon unavailable; apps/web owned by frontend-foundation).
+# Web image (Next.js). STATUS: built and smoke-tested in GitHub Actions CI (2026-11-22).
 # Assumes apps/web uses `output: "standalone"` in next.config. Build from repo root:
-#   docker build -f infra/docker/web.Dockerfile -t pc-web .
+#   docker build -f infra/docker/web.Dockerfile -t dml-web .
 FROM node:22-slim AS deps
 RUN corepack enable
 WORKDIR /srv/app
