@@ -194,7 +194,7 @@ median 252 ms with 4 workers vs 539 ms with 1, on the busy machine), put a short
 * `audit_logs` is append-only and is not cleared by resets; it grows with visitor activity (verification is incremental above 20,000 rows).
   To start fresh, rebuild the database.
 
-## 11. Public demo: Vercel (web) + a container host (API) — written, NOT yet deployed
+## 11. Public demo: Vercel (web) + a container host (API) — deployed 2026-11-23 on free tiers (one open defect, see the end)
 
 **Why two hosts.** Vercel runs the Next.js web app. It cannot run the API: the API needs Python with pandas/scikit-learn and a ~160 MB SQLite
 database, which exceeds the size limits of Vercel's functions. The API therefore runs as a container on another host, and the web app proxies
@@ -213,9 +213,12 @@ training is CPU heavy). So the API image is built once in CI and the host only p
    package public in GitHub — only if you are happy for the API source inside the image to be public.)
 3. Render: *New → Blueprint* → pick the repository (it reads `render.yaml`, `runtime: image`) → Apply. Or *New → Web Service → Existing image* and paste the image URL.
    Prebuilt-image services are **not** auto-deployed: after a new image is published, press *Manual Deploy*.
-4. Free plan: 0.1 CPU and 512 MB RAM, sleeps after ~15 minutes idle (about a minute to wake). Expect a slow first page because one page fires 13–20 API
-   calls; a paid plan with more CPU is the realistic option for a demo you send to people.
-5. Note the service URL, for example `https://digital-mill-lab-api.onrender.com`; check `<url>/health` and `<url>/api/v1/meta`.
+4. Free plan: 0.1 CPU and 512 MB RAM, sleeps after ~15 minutes idle (Render warns of delays of 50 seconds or more). **Observed 2026-11-23:** pulling and starting
+   the prebuilt image took 36.5 s. Single requests through the Vercel proxy took 0.4 s (`meta`, `alerts`), 2.3 s (`executive/kpis`, `maintenance/equipment`) and
+   5.4 s (`executive/overview`), so a page that fires 20 or more requests loads slowly. A paid plan with more CPU is the realistic option for a demo you send to people.
+5. Note the service URL; check `<url>/health` and `<url>/api/v1/meta`. **Observed:** the service was created by hand with the dashboard's *Existing image* form, using the same image and
+   environment values as `render.yaml` (the Blueprint file itself was not applied); its URL is `https://digital-mill-lab-api-latest.onrender.com`. `/health` returned `ok`, `/api/v1/meta` returned the product name and the KPI
+   endpoints returned data.
 
 ### Step 2 — the web app (Vercel)
 1. *Add New → Project* → import the repository (grant the Vercel GitHub app access to it).
@@ -225,6 +228,9 @@ training is CPU heavy). So the API image is built once in CI and the host only p
    the first deployment; changing it later needs a redeploy.
 4. Deploy. `next.config.ts` detects Vercel (`VERCEL=1`), turns off `standalone`, and includes the markdown files the `/docs` pages read
    (`docs/internal` is excluded; verified locally by inspecting the traced file lists).
+   **Observed 2026-11-23:** the web project built in 51 s. A deployment-specific URL (`*-<hash>-<team>.vercel.app`) is behind Vercel Authentication and cannot be shared; the
+   production domain `https://digital-mill-lab-web.vercel.app` is public. While `API_INTERNAL_URL` was not part of the build, `/api/v1/*` returned 404 with `DNS_HOSTNAME_RESOLVED_PRIVATE` (the rewrite
+   pointed at `127.0.0.1`); after setting the variable and redeploying, the proxy returned data. The `/docs/*` pages render their markdown on Vercel.
 
 ### After deploying
 * Open `/`, `/demo/executive` (data should appear within a few seconds; the very first call can be slow if the API was asleep), run the tour.
@@ -234,6 +240,13 @@ training is CPU heavy). So the API image is built once in CI and the host only p
   (already set in `render.yaml`). `POST /demo/reset-all` is refused when `APP_ENV=demo` (it would let any visitor clear everyone's sandbox).
 * Vercel *Deployment Protection* may put preview URLs behind a login; production domains are public. The demo is intended to be public.
 
+### Open defect: rate limit smaller than one page load (found 2026-11-23)
+The limiter's default buckets (one session: burst 20, 120 per minute; one IP: burst 40, 240 per minute) are smaller than the number of requests one demo page fires.
+Reproduced through the Vercel proxy: 30 parallel requests with one session id gave 20 successes and 10 HTTP 429 responses (scope `session`); five sessions with 20 requests
+each gave 60 successes and 40 refusals (the IP bucket). Because `TRUST_PROXY_HEADERS=false`, every visitor shares one IP bucket. Raising `RATE_LIMIT_BURST`,
+`RATE_LIMIT_PER_SESSION_PER_MINUTE` and `RATE_LIMIT_PER_IP_PER_MINUTE` through Render environment variables had not changed the observed limits when last checked; the cause was not
+established. The intended fix is in code (a separate session burst sized for a page load, with a test that replays one page).
+
 ### Not verified
-Never deployed on Vercel or Render by the author. Unknown until tried: Render's build memory limit, cold-start time, whether the `/docs` pages find their
-files inside Vercel's function bundle (configured and checked locally, not on Vercel), and Vercel's handling of the monorepo settings above.
+The browser tests have not been run against the public URL. The time a sleeping Render instance needs to wake, and whether Vercel's proxy waits that long, were not measured.
+Applying the Blueprint file (`render.yaml`), the docker-compose file and PostgreSQL are not verified.

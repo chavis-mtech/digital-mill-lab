@@ -35,12 +35,20 @@ export default async function DeveloperPage() {
           <section aria-labelledby="exp">
             <h2 id="exp" className="mb-4 text-lg font-semibold">{t.experience}</h2>
             {d.experience.map((e) => (
-              <div key={e.company} className="rounded-2xl border border-border bg-surface p-6">
+              <div key={e.company} className="mb-4 rounded-2xl border border-border bg-surface p-6 last:mb-0">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3 className="text-base font-semibold">{e.company}</h3>
                   <span className="tabular text-xs text-muted-foreground">{e.period}</span>
                 </div>
-                <div className="mt-4 flex flex-col gap-5">
+                <p className="mt-1 text-sm text-muted-foreground">{e.role}</p>
+                {e.summary ? (
+                  <ul className="mt-3 list-disc space-y-1 pl-4 text-sm text-muted-foreground">
+                    {e.summary[locale].map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <div className={e.projects.length > 0 ? "mt-4 flex flex-col gap-5" : "hidden"}>
                   {e.projects.map((p) => (
                     <div key={p.name} className="border-l-2 border-accent/40 pl-4">
                       <p className="text-sm font-semibold">{p.name}</p>

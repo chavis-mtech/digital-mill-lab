@@ -42,30 +42,30 @@
 | Deployed a public demo at a stable URL | CM-37 | Do not use: not deployed |
 | Computer-vision FFB prototype with safe upload handling | CM-23 | Use only as "research prototype, no accuracy claimed" |
 
-## 3. Facts the résumé may state from the applicant's README only
+## 3. Facts the résumé may state (from the applicant's README and résumé only)
 
 | Fact | Source |
 |---|---|
-| Full-Stack Developer, Bookengine.com, 2024 to present (as of the README's March 2025 update) | README |
+| Head of AI Department, Von Bundit Co., Ltd., Oct 2026 to present; Programmer, Bookengine.com (Thailand) Co., Ltd., Jul 2024 to Oct 2026 | Résumé (Nov 2026) |
 | TITANSJET POS: real-time order management with Socket.io between order points and kitchen displays; a Task Tracker with multi-level assignment and Kanban workflow | README |
 | Livepocket HRM and payroll: validation logic for complex overtime rules tested with PHPUnit; document management with multi-level approval and Pako compression; encrypted and decrypted salary adjustments; notifications through Firebase Cloud Messaging | README |
 | Skills: Angular, Vue.js, SolidJS; .NET, Rust, Python, Laravel, CodeIgniter, NestJS; MariaDB, PostgreSQL, MongoDB; Ubuntu, Git, Docker, JetBrains IDEs | README |
 | Education: Bachelor's Degree in Computer Science, Thaksin University (TSU) | README |
 | Contact: GitHub github.com/chavis-mtech; email chavis.mtech@gmail.com. Whether to publish a phone number is an owner decision | README |
 
-Do **not** add job titles beyond "Full-Stack Developer", team sizes, durations, metrics or outcomes for these roles unless the owner supplies and confirms them.
+Titles and dates above come from the owner's résumé (November 2026). Do **not** add team sizes, metrics or outcomes for these roles unless the owner supplies and confirms them.
 
 ## 4. Checklist: what the applicant still needs to supply (TODO)
 
 - [ ] **Thai name** (ชื่อ-นามสกุลภาษาไทย). The README gives the Latin spelling only.
 - [ ] **LinkedIn URL** (not in the README).
 - [ ] **Project-management and team-leadership experience.** The README lists none; the target role is Technical Project Manager (Software & AI), so this is the most important gap. Give only true, checkable facts (team size, scope, duration, outcome).
-- [ ] **AI and data experience outside this project** (courses, work, other repositories), if any.
+- [x] **AI and data experience outside this project.** From the résumé: Head of AI Department since Oct 2026 (kept at summary level on public pages).
 - [ ] **Certifications** (PM, cloud, data or security), if any. None are claimed.
 - [ ] **Language proficiency** (Thai, English, others).
 - [ ] **Availability**: start date and notice period, preferred work location (city, remote or hybrid).
-- [ ] **Current employment status.** The README (updated March 2025) says Bookengine.com 2024 to present; confirm it is still accurate in November 2026 and add dates.
-- [ ] **Education details** (graduation year, honours), if desired.
+- [x] **Current employment status.** Confirmed by the owner on 2026-11-23: last day at Bookengine.com 25 Oct 2026; Von Bundit Co., Ltd. from 28 Oct 2026 (Head of AI Department).
+- [x] **Education details.** Graduation year 2024 (résumé); honours are not stated.
 - [ ] **Résumé PDF** (single source of truth for dates and titles) and an optional **photo**.
 - [ ] **Which contact details to publish** (email, phone, social links).
 - [ ] **Public repository URL** and **demo URL** once published and deployed.

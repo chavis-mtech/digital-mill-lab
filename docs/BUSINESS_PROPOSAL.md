@@ -58,7 +58,7 @@ The demo is the author's way of showing method before asking for anything. Statu
 | Executive control-tower page; maintenance, equipment and work-order pages; logistics page | Built; covered by 20 end-to-end scenario tests and the full suite (1,139 passed); the executive page was also checked in a browser by the orchestrator | |
 | Digital twin, palm-mill, scenario simulator and business-impact screens | Built and covered by end-to-end scenario tests. Energy screen is partial (agent browser checks only); traceability is built and tested in the full suite. **[PENDING VERIFICATION · CM-29b: energy screen only]** | |
 | Grounded Copilot with citations and a no-API mode | Built. Evaluator re-run: grounded answers 45 of 45, unauthorised requests refused 23 of 23, prompt injections refused 26 of 26. On 46 fresh paraphrases: 25 correct, 16 clarified, 5 wrong, so it answers about half correctly and clarifies about a third. The LLM mode has been tested only with a fake provider | |
-| Public demo URL | `[DEMO_URL - not deployed yet]` (CM-37) | |
+| Public demo URL | https://digital-mill-lab-web.vercel.app (CM-37; free tiers, see docs/DEPLOYMENT.md section 11) | |
 
 The demo's ROI simulator shows illustrative scenarios built on adjustable assumptions. **None of its numbers are claims
 about any company.**
@@ -255,4 +255,4 @@ thinking about, what a first extract might look like, and who should be in the r
 demo and its evidence in the same meeting.
 
 *Contact and links:* GitHub `https://github.com/chavis-mtech` (applicant's public profile) · demo link
-`[DEMO_URL - not deployed yet]` · résumé: attached separately **[TODO (owner): résumé PDF]**.
+https://digital-mill-lab-web.vercel.app · résumé: attached separately.

@@ -16,12 +16,12 @@ My name is Chavis Keawrat. I am a full-stack developer based in **[CITY / COUNTR
 my interest in **[ROLE]** at **[COMPANY]**.
 
 **A little about my background**
-Since 2024 I have worked at Bookengine.com **[CONFIRM still current]** on systems where accuracy and reliability matter: a
-real-time point-of-sale and order-management system (Socket.io keeping order points and kitchen displays in sync) and an HR and
-payroll system, where I implemented complex overtime rules covered by PHPUnit tests, multi-level approval workflows, encrypted
-salary adjustments and push notifications. I hold a Bachelor's degree in Computer Science from Thaksin University. My toolset
-includes Python, Laravel, Next.js, Vue, PostgreSQL, Docker and Git. **[ADD any other AI, data or project-management experience that
-is true and can be checked.]**
+Since October 2026 I have been Head of AI Department at Von Bundit Co., Ltd., a natural rubber producer and exporter, responsible for AI and
+automation for HR and factory operations, with an emphasis on data accuracy, traceability and a person confirming AI output before it is used.
+From July 2024 to October 2026 I was a programmer at Bookengine.com (Thailand) Co., Ltd., building a point-of-sale system and an HRM and payroll
+system for the hotel business (multi-level approval workflows, a Vue 2 to Vue 3 migration, PHPUnit and Cypress tests). I hold a Bachelor of Science
+in Computer Science from Thaksin University (2024). My main tools are TypeScript, Python, NestJS, FastAPI, Next.js, PostgreSQL and Docker.
+**[ADD team size, scope and outcomes of projects you led, only if true and checkable.]**
 
 **Why [COMPANY]**
 **[2–3 sentences, in your own words, based on public, dated information about the company. Do not claim to know how its teams work

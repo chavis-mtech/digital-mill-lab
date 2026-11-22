@@ -75,7 +75,7 @@ export default defineMessages({
     developer: {
       title: "ผู้พัฒนา",
       positionSought: "ตำแหน่งที่สนใจ",
-      sourceNote: "ข้อมูลทั้งหมดในหน้านี้มาจาก GitHub profile README ของผู้สมัคร (อัปเดตล่าสุด มีนาคม 2025) เท่านั้น ส่วนที่ไม่มีใน README แสดงเป็นตัวยึดตำแหน่ง",
+      sourceNote: "ข้อมูลทั้งหมดในหน้านี้มาจาก GitHub profile README ของผู้สมัคร (อัปเดตล่าสุด พฤศจิกายน 2026) และเรซูเม่ของผู้สมัครเท่านั้น ส่วนที่ไม่มีในแหล่งเหล่านี้แสดงเป็นตัวยึดตำแหน่ง",
       summary: "สรุป",
       experience: "ประสบการณ์ทำงาน",
       skills: "ทักษะและเทคโนโลยี",
@@ -84,7 +84,7 @@ export default defineMessages({
       thisProjectBody:
         "โครงการนี้แสดงการวางสถาปัตยกรรม การแบ่งงาน การกำหนดสัญญาข้อมูล และการควบคุมความซื่อตรงของข้อมูล — สถานะของแต่ละส่วนดูได้จากป้ายสถานะในระบบ",
       placeholders: "รอข้อมูลจากผู้สมัคร (TODO)",
-      placeholdersNote: "รายการด้านล่างไม่มีอยู่ใน README จึงยังไม่แสดงข้อมูลใด ๆ",
+      placeholdersNote: "รายการด้านล่างไม่มีอยู่ใน README และเรซูเม่ จึงยังไม่แสดงข้อมูลใด ๆ",
       contact: "ติดต่อ",
     },
     contact: {
@@ -173,7 +173,7 @@ export default defineMessages({
     developer: {
       title: "Developer",
       positionSought: "Position sought",
-      sourceNote: "Every fact on this page comes only from the applicant's GitHub profile README (last updated March 2025). Anything not in that README is shown as a placeholder.",
+      sourceNote: "Every fact on this page comes only from the applicant's GitHub profile README (last updated November 2026) and résumé. Anything not in those sources is shown as a placeholder.",
       summary: "Summary",
       experience: "Work experience",
       skills: "Skills & technologies",
@@ -182,7 +182,7 @@ export default defineMessages({
       thisProjectBody:
         "This project shows architecture, work breakdown, data contracts and data-honesty controls — the status of each part is visible from the status chips in the system.",
       placeholders: "Awaiting the applicant (TODO)",
-      placeholdersNote: "These items are not in the README, so nothing is shown for them yet.",
+      placeholdersNote: "These items are not in the README or résumé, so nothing is shown for them yet.",
       contact: "Contact",
     },
     contact: {
