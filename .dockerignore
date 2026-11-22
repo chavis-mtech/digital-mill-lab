@@ -1,0 +1,16 @@
+# Docker build context = repo root. Keep images small and never ship private notes or local state.
+.git
+.github
+**/.venv
+**/node_modules
+**/.next
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+data/dev
+data/demo.db
+*.db
+.env
+.env.*
+docs/internal
+.DS_Store

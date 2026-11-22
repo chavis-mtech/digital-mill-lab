@@ -1,0 +1,938 @@
+{
+  "ENERGY_EFFICIENCY_DROP": {
+    "window_local": [
+      "2026-09-07 00:00:00",
+      "2026-09-14 00:00:00"
+    ],
+    "focus_local": "2026-09-10 15:00:00",
+    "focus": {
+      "date": "2026-09-10",
+      "ffb_received_t": 1125.0,
+      "ffb_processed_t": 1296.0,
+      "oer_pct": 18.67,
+      "throughput_tph": 55.26,
+      "running_h": 23.5,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.026,
+      "press_fibre_loss_pct": 0.357,
+      "sludge_loss_pct": 0.411,
+      "efb_loss_pct": 0.074,
+      "sterilizer_cycle_min": 80.2,
+      "header_pressure_min_bar": 2.94,
+      "clarifier_temp_min_c": 89.4,
+      "digester_temp_min_c": 92.4,
+      "ffb_wait_to_process_h": 4.81,
+      "ramp_stock_max_t": 381.0,
+      "kwh_per_t": 18.74,
+      "steam_t_per_t": 0.553,
+      "idle_kwh": 221.0,
+      "grid_import_kwh": 221.0,
+      "diesel_l": 518.0,
+      "energy_cost_thb": 22060.0,
+      "trucks": 128,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 19.5,
+      "turnaround_mean_min": 34.4,
+      "delivered_unripe_pct": 3.98,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20260910-T1",
+      "lot_ffa_pct": 2.86,
+      "lot_dobi": 3.09
+    },
+    "baseline": {
+      "date": "2026-08-31",
+      "ffb_received_t": 1033.3,
+      "ffb_processed_t": 1179.9,
+      "oer_pct": 18.62,
+      "throughput_tph": 55.08,
+      "running_h": 21.4,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.029,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.412,
+      "efb_loss_pct": 0.074,
+      "sterilizer_cycle_min": 80.1,
+      "header_pressure_min_bar": 2.96,
+      "clarifier_temp_min_c": 89.4,
+      "digester_temp_min_c": 91.9,
+      "ffb_wait_to_process_h": 5.8,
+      "ramp_stock_max_t": 399.0,
+      "kwh_per_t": 17.05,
+      "steam_t_per_t": 0.484,
+      "idle_kwh": 538.0,
+      "grid_import_kwh": 540.0,
+      "diesel_l": 472.0,
+      "energy_cost_thb": 21469.0,
+      "trucks": 116,
+      "wait_to_weigh_mean_min": 5.4,
+      "wait_to_weigh_max_min": 16.6,
+      "turnaround_mean_min": 34.0,
+      "delivered_unripe_pct": 3.83,
+      "harvest_to_mill_h": 18.5,
+      "cpo_lot": "CPO-20260831-T1",
+      "lot_ffa_pct": 2.891,
+      "lot_dobi": 3.13
+    },
+    "normal_day": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [
+      {
+        "code": "ALR-20260908-0004",
+        "severity": "medium",
+        "module": "energy",
+        "equipment": NaN,
+        "title": "Electricity per tonne FFB above 18.5 kWh/t",
+        "raised_local": "2026-09-08 23:50:00"
+      },
+      {
+        "code": "ALR-20260908-0005",
+        "severity": "medium",
+        "module": "energy",
+        "equipment": NaN,
+        "title": "Steam per tonne FFB above 0.55 t/t",
+        "raised_local": "2026-09-08 23:50:00"
+      },
+      {
+        "code": "ALR-20260911-0006",
+        "severity": "medium",
+        "module": "energy",
+        "equipment": "BLR-01",
+        "title": "BLR-01-TMP-FLUE HIGH: Boiler flue gas temperature (economiser outlet)",
+        "raised_local": "2026-09-11 03:30:00"
+      },
+      {
+        "code": "ALR-20260911-0007",
+        "severity": "medium",
+        "module": "maintenance",
+        "equipment": "BLR-FAN-01",
+        "title": "BLR-FAN-01-CUR HIGH: Boiler induced-draft fan motor current",
+        "raised_local": "2026-09-11 12:00:00"
+      }
+    ],
+    "focus_batches": {
+      "count": 12,
+      "lowest_oer": [
+        {
+          "code": "PB-20260910-10",
+          "oer_pct": 18.3968
+        },
+        {
+          "code": "PB-20260910-20",
+          "oer_pct": 18.5311
+        },
+        {
+          "code": "PB-20260910-14",
+          "oer_pct": 18.5594
+        }
+      ]
+    },
+    "sensors": {
+      "BLR-01-TMP-FLUE": {
+        "focus": 219.346,
+        "baseline": 187.291,
+        "agg": "max"
+      },
+      "BLR-FAN-01-CUR": {
+        "focus": 235.345,
+        "baseline": 172.732,
+        "agg": "mean"
+      },
+      "BLR-01-FLOW-STM": {
+        "focus": 29.829,
+        "baseline": 23.815,
+        "agg": "mean"
+      }
+    }
+  },
+  "OER_DEGRADATION": {
+    "window_local": [
+      "2026-09-30 00:00:00",
+      "2026-10-06 00:00:00"
+    ],
+    "focus_local": "2026-10-02 16:00:00",
+    "focus": {
+      "date": "2026-10-02",
+      "ffb_received_t": 1062.4,
+      "ffb_processed_t": 1178.1,
+      "oer_pct": 17.71,
+      "throughput_tph": 57.32,
+      "running_h": 20.6,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.503,
+      "press_fibre_loss_pct": 0.502,
+      "sludge_loss_pct": 0.616,
+      "efb_loss_pct": 0.15,
+      "sterilizer_cycle_min": 66.2,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 83.0,
+      "digester_temp_min_c": 91.8,
+      "ffb_wait_to_process_h": 4.92,
+      "ramp_stock_max_t": 338.0,
+      "kwh_per_t": 17.06,
+      "steam_t_per_t": 0.486,
+      "idle_kwh": 714.0,
+      "grid_import_kwh": 714.0,
+      "diesel_l": 471.0,
+      "energy_cost_thb": 22363.0,
+      "trucks": 102,
+      "wait_to_weigh_mean_min": 5.2,
+      "wait_to_weigh_max_min": 21.8,
+      "turnaround_mean_min": 34.4,
+      "delivered_unripe_pct": 8.73,
+      "harvest_to_mill_h": 25.3,
+      "cpo_lot": "CPO-20261002-T1",
+      "lot_ffa_pct": 3.16,
+      "lot_dobi": 2.89
+    },
+    "baseline": {
+      "date": "2026-09-23",
+      "ffb_received_t": 1168.6,
+      "ffb_processed_t": 992.2,
+      "oer_pct": 18.77,
+      "throughput_tph": 57.02,
+      "running_h": 17.4,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.007,
+      "press_fibre_loss_pct": 0.357,
+      "sludge_loss_pct": 0.394,
+      "efb_loss_pct": 0.075,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.3,
+      "digester_temp_min_c": 92.0,
+      "ffb_wait_to_process_h": 5.23,
+      "ramp_stock_max_t": 499.0,
+      "kwh_per_t": 17.67,
+      "steam_t_per_t": 0.493,
+      "idle_kwh": 1354.0,
+      "grid_import_kwh": 1354.0,
+      "diesel_l": 397.0,
+      "energy_cost_thb": 21566.0,
+      "trucks": 111,
+      "wait_to_weigh_mean_min": 5.4,
+      "wait_to_weigh_max_min": 13.7,
+      "turnaround_mean_min": 37.5,
+      "delivered_unripe_pct": 4.32,
+      "harvest_to_mill_h": 20.2,
+      "cpo_lot": "CPO-20260923-T1",
+      "lot_ffa_pct": 2.991,
+      "lot_dobi": 2.99
+    },
+    "normal_day": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [
+      {
+        "code": "ALR-20261002-0008",
+        "severity": "medium",
+        "module": "production",
+        "equipment": NaN,
+        "title": "OER below baseline (more than 0.8 pp)",
+        "raised_local": "2026-10-02 03:00:00"
+      },
+      {
+        "code": "ALR-20261002-0009",
+        "severity": "medium",
+        "module": "production",
+        "equipment": "CLR-01",
+        "title": "CLR-01-TMP LOW: Clarifier oil temperature",
+        "raised_local": "2026-10-02 06:15:00"
+      },
+      {
+        "code": "ALR-20261002-0010",
+        "severity": "medium",
+        "module": "production",
+        "equipment": NaN,
+        "title": "OER below baseline (more than 0.8 pp)",
+        "raised_local": "2026-10-02 13:00:00"
+      }
+    ],
+    "focus_batches": {
+      "count": 11,
+      "lowest_oer": [
+        {
+          "code": "PB-20261002-18",
+          "oer_pct": 17.2193
+        },
+        {
+          "code": "PB-20261002-14",
+          "oer_pct": 17.4259
+        },
+        {
+          "code": "PB-20261002-10",
+          "oer_pct": 17.461
+        }
+      ]
+    },
+    "sensors": {
+      "CLR-01-TMP": {
+        "focus": 83.042,
+        "baseline": 86.54,
+        "agg": "min"
+      },
+      "PRS-02-CUR": {
+        "focus": 127.464,
+        "baseline": 122.578,
+        "agg": "mean"
+      }
+    }
+  },
+  "NORMAL_DAY": {
+    "window_local": [
+      "2026-10-21 00:00:00",
+      "2026-10-22 00:00:00"
+    ],
+    "focus_local": "2026-10-21 15:00:00",
+    "focus": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "baseline": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [],
+    "focus_batches": {
+      "count": 11,
+      "lowest_oer": [
+        {
+          "code": "PB-20261021-04",
+          "oer_pct": 17.9093
+        },
+        {
+          "code": "PB-20261021-12",
+          "oer_pct": 18.2682
+        },
+        {
+          "code": "PB-20261021-14",
+          "oer_pct": 18.3493
+        }
+      ]
+    },
+    "sensors": {}
+  },
+  "STEAM_PRESSURE_DEVIATION": {
+    "window_local": [
+      "2026-10-29 04:00:00",
+      "2026-10-29 22:00:00"
+    ],
+    "focus_local": "2026-10-29 12:00:00",
+    "focus": {
+      "date": "2026-10-29",
+      "ffb_received_t": 1001.0,
+      "ffb_processed_t": 870.4,
+      "oer_pct": 18.47,
+      "throughput_tph": 54.42,
+      "running_h": 16.0,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.044,
+      "press_fibre_loss_pct": 0.366,
+      "sludge_loss_pct": 0.405,
+      "efb_loss_pct": 0.081,
+      "sterilizer_cycle_min": 82.8,
+      "header_pressure_min_bar": 2.54,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 89.3,
+      "ffb_wait_to_process_h": 4.43,
+      "ramp_stock_max_t": 520.0,
+      "kwh_per_t": 18.44,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 1611.0,
+      "grid_import_kwh": 1980.0,
+      "diesel_l": 348.0,
+      "energy_cost_thb": 22342.0,
+      "trucks": 106,
+      "wait_to_weigh_mean_min": 5.9,
+      "wait_to_weigh_max_min": 16.3,
+      "turnaround_mean_min": 45.5,
+      "delivered_unripe_pct": 4.05,
+      "harvest_to_mill_h": 18.7,
+      "cpo_lot": "CPO-20261029-T1",
+      "lot_ffa_pct": 2.969,
+      "lot_dobi": 3.1
+    },
+    "baseline": {
+      "date": "2026-10-22",
+      "ffb_received_t": 1083.8,
+      "ffb_processed_t": 1104.7,
+      "oer_pct": 18.44,
+      "throughput_tph": 56.55,
+      "running_h": 19.5,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.014,
+      "press_fibre_loss_pct": 0.359,
+      "sludge_loss_pct": 0.399,
+      "efb_loss_pct": 0.075,
+      "sterilizer_cycle_min": 80.5,
+      "header_pressure_min_bar": 2.94,
+      "clarifier_temp_min_c": 89.6,
+      "digester_temp_min_c": 91.5,
+      "ffb_wait_to_process_h": 5.28,
+      "ramp_stock_max_t": 482.0,
+      "kwh_per_t": 17.2,
+      "steam_t_per_t": 0.488,
+      "idle_kwh": 921.0,
+      "grid_import_kwh": 921.0,
+      "diesel_l": 442.0,
+      "energy_cost_thb": 22044.0,
+      "trucks": 121,
+      "wait_to_weigh_mean_min": 5.6,
+      "wait_to_weigh_max_min": 13.5,
+      "turnaround_mean_min": 38.3,
+      "delivered_unripe_pct": 4.58,
+      "harvest_to_mill_h": 18.0,
+      "cpo_lot": "CPO-20261022-T1",
+      "lot_ffa_pct": 2.896,
+      "lot_dobi": 3.07
+    },
+    "normal_day": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [
+      {
+        "code": "ALR-20261029-0011",
+        "severity": "medium",
+        "module": "maintenance",
+        "equipment": "FWP-01",
+        "title": "FWP-01-VIB-DE HIGH: Boiler feed-water pump drive-end vibration (RMS velocity)",
+        "raised_local": "2026-10-29 07:30:00"
+      },
+      {
+        "code": "ALR-20261029-0012",
+        "severity": "high",
+        "module": "production",
+        "equipment": "BLR-01",
+        "title": "BLR-01-P-DRUM LOW: Boiler drum pressure",
+        "raised_local": "2026-10-29 13:10:00"
+      },
+      {
+        "code": "ALR-20261029-0013",
+        "severity": "high",
+        "module": "production",
+        "equipment": "TG-01",
+        "title": "TG-01-P-HDR LOW: Back-pressure vessel (BPV) steam header pressure",
+        "raised_local": "2026-10-29 13:10:00"
+      }
+    ],
+    "focus_batches": {
+      "count": 8,
+      "lowest_oer": [
+        {
+          "code": "PB-20261029-12",
+          "oer_pct": 18.1341
+        },
+        {
+          "code": "PB-20261029-20",
+          "oer_pct": 18.1813
+        },
+        {
+          "code": "PB-20261029-00",
+          "oer_pct": 18.4197
+        }
+      ]
+    },
+    "sensors": {
+      "FWP-01-VIB-DE": {
+        "focus": 3.751,
+        "baseline": 1.495,
+        "agg": "max"
+      },
+      "BLR-01-P-DRUM": {
+        "focus": 17.524,
+        "baseline": 19.886,
+        "agg": "min"
+      },
+      "TG-01-P-HDR": {
+        "focus": 2.543,
+        "baseline": 2.92,
+        "agg": "min"
+      },
+      "TG-01-LOAD": {
+        "focus": 583.882,
+        "baseline": 751.993,
+        "agg": "mean"
+      }
+    }
+  },
+  "TRUCK_QUEUE_CONGESTION": {
+    "window_local": [
+      "2026-11-12 00:00:00",
+      "2026-11-16 00:00:00"
+    ],
+    "focus_local": "2026-11-14 10:00:00",
+    "focus": {
+      "date": "2026-11-14",
+      "ffb_received_t": 1367.7,
+      "ffb_processed_t": 950.4,
+      "oer_pct": 18.36,
+      "throughput_tph": 56.26,
+      "running_h": 16.9,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.051,
+      "press_fibre_loss_pct": 0.38,
+      "sludge_loss_pct": 0.411,
+      "efb_loss_pct": 0.074,
+      "sterilizer_cycle_min": 80.1,
+      "header_pressure_min_bar": 2.94,
+      "clarifier_temp_min_c": 88.8,
+      "digester_temp_min_c": 91.6,
+      "ffb_wait_to_process_h": 3.93,
+      "ramp_stock_max_t": 646.0,
+      "kwh_per_t": 17.97,
+      "steam_t_per_t": 0.495,
+      "idle_kwh": 1449.0,
+      "grid_import_kwh": 1449.0,
+      "diesel_l": 380.0,
+      "energy_cost_thb": 21757.0,
+      "trucks": 132,
+      "wait_to_weigh_mean_min": 29.6,
+      "wait_to_weigh_max_min": 123.4,
+      "turnaround_mean_min": 128.8,
+      "delivered_unripe_pct": 4.54,
+      "harvest_to_mill_h": 17.8,
+      "cpo_lot": "CPO-20261114-T1",
+      "lot_ffa_pct": 2.798,
+      "lot_dobi": 3.09
+    },
+    "baseline": {
+      "date": "2026-11-05",
+      "ffb_received_t": 960.9,
+      "ffb_processed_t": 1103.6,
+      "oer_pct": 18.42,
+      "throughput_tph": 55.19,
+      "running_h": 20.0,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.021,
+      "press_fibre_loss_pct": 0.357,
+      "sludge_loss_pct": 0.406,
+      "efb_loss_pct": 0.075,
+      "sterilizer_cycle_min": 80.0,
+      "header_pressure_min_bar": 2.88,
+      "clarifier_temp_min_c": 89.3,
+      "digester_temp_min_c": 92.1,
+      "ffb_wait_to_process_h": 4.66,
+      "ramp_stock_max_t": 319.0,
+      "kwh_per_t": 17.31,
+      "steam_t_per_t": 0.487,
+      "idle_kwh": 813.0,
+      "grid_import_kwh": 813.0,
+      "diesel_l": 441.0,
+      "energy_cost_thb": 21493.0,
+      "trucks": 90,
+      "wait_to_weigh_mean_min": 5.5,
+      "wait_to_weigh_max_min": 15.2,
+      "turnaround_mean_min": 34.8,
+      "delivered_unripe_pct": 4.01,
+      "harvest_to_mill_h": 19.7,
+      "cpo_lot": "CPO-20261105-T1",
+      "lot_ffa_pct": 2.883,
+      "lot_dobi": 3.1
+    },
+    "normal_day": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [
+      {
+        "code": "ALR-20261114-0014",
+        "severity": "high",
+        "module": "logistics",
+        "equipment": NaN,
+        "title": "Truck wait-to-weigh above 60 min",
+        "raised_local": "2026-11-14 11:23:37"
+      },
+      {
+        "code": "ALR-20261114-0015",
+        "severity": "medium",
+        "module": "logistics",
+        "equipment": NaN,
+        "title": "Truck queue at the weighbridge >= 12",
+        "raised_local": "2026-11-14 12:10:00"
+      },
+      {
+        "code": "ALR-20261115-0017",
+        "severity": "medium",
+        "module": "production",
+        "equipment": NaN,
+        "title": "FFB wait-to-process above 12 h",
+        "raised_local": "2026-11-15 15:00:00"
+      }
+    ],
+    "focus_batches": {
+      "count": 9,
+      "lowest_oer": [
+        {
+          "code": "PB-20261114-22",
+          "oer_pct": 18.0772
+        },
+        {
+          "code": "PB-20261114-08",
+          "oer_pct": 18.2097
+        },
+        {
+          "code": "PB-20261114-14",
+          "oer_pct": 18.2848
+        }
+      ]
+    },
+    "sensors": {}
+  },
+  "PRESS_VIBRATION_ANOMALY": {
+    "window_local": [
+      "2026-11-16 00:00:00",
+      "2026-11-21 00:00:00"
+    ],
+    "focus_local": "2026-11-20 15:00:00",
+    "focus": {
+      "date": "2026-11-20",
+      "ffb_received_t": 908.2,
+      "ffb_processed_t": 887.1,
+      "oer_pct": 18.2,
+      "throughput_tph": 55.44,
+      "running_h": 16.0,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.096,
+      "press_fibre_loss_pct": 0.424,
+      "sludge_loss_pct": 0.406,
+      "efb_loss_pct": 0.075,
+      "sterilizer_cycle_min": 80.1,
+      "header_pressure_min_bar": 2.94,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.1,
+      "ffb_wait_to_process_h": 2.77,
+      "ramp_stock_max_t": 201.0,
+      "kwh_per_t": 18.51,
+      "steam_t_per_t": 0.498,
+      "idle_kwh": 1625.0,
+      "grid_import_kwh": 1625.0,
+      "diesel_l": 355.0,
+      "energy_cost_thb": 21330.0,
+      "trucks": 104,
+      "wait_to_weigh_mean_min": 5.6,
+      "wait_to_weigh_max_min": 17.2,
+      "turnaround_mean_min": 33.8,
+      "delivered_unripe_pct": 3.87,
+      "harvest_to_mill_h": 20.5,
+      "cpo_lot": "CPO-20261120-T1",
+      "lot_ffa_pct": 2.87,
+      "lot_dobi": 3.04
+    },
+    "baseline": {
+      "date": "2026-11-05",
+      "ffb_received_t": 960.9,
+      "ffb_processed_t": 1103.6,
+      "oer_pct": 18.42,
+      "throughput_tph": 55.19,
+      "running_h": 20.0,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.021,
+      "press_fibre_loss_pct": 0.357,
+      "sludge_loss_pct": 0.406,
+      "efb_loss_pct": 0.075,
+      "sterilizer_cycle_min": 80.0,
+      "header_pressure_min_bar": 2.88,
+      "clarifier_temp_min_c": 89.3,
+      "digester_temp_min_c": 92.1,
+      "ffb_wait_to_process_h": 4.66,
+      "ramp_stock_max_t": 319.0,
+      "kwh_per_t": 17.31,
+      "steam_t_per_t": 0.487,
+      "idle_kwh": 813.0,
+      "grid_import_kwh": 813.0,
+      "diesel_l": 441.0,
+      "energy_cost_thb": 21493.0,
+      "trucks": 90,
+      "wait_to_weigh_mean_min": 5.5,
+      "wait_to_weigh_max_min": 15.2,
+      "turnaround_mean_min": 34.8,
+      "delivered_unripe_pct": 4.01,
+      "harvest_to_mill_h": 19.7,
+      "cpo_lot": "CPO-20261105-T1",
+      "lot_ffa_pct": 2.883,
+      "lot_dobi": 3.1
+    },
+    "normal_day": {
+      "date": "2026-10-21",
+      "ffb_received_t": 1065.7,
+      "ffb_processed_t": 1054.5,
+      "oer_pct": 18.52,
+      "throughput_tph": 55.19,
+      "running_h": 19.1,
+      "downtime_h": 0.0,
+      "oil_loss_total_pct": 1.038,
+      "press_fibre_loss_pct": 0.36,
+      "sludge_loss_pct": 0.418,
+      "efb_loss_pct": 0.077,
+      "sterilizer_cycle_min": 79.6,
+      "header_pressure_min_bar": 2.95,
+      "clarifier_temp_min_c": 89.0,
+      "digester_temp_min_c": 92.2,
+      "ffb_wait_to_process_h": 4.91,
+      "ramp_stock_max_t": 387.0,
+      "kwh_per_t": 17.52,
+      "steam_t_per_t": 0.489,
+      "idle_kwh": 999.0,
+      "grid_import_kwh": 999.0,
+      "diesel_l": 422.0,
+      "energy_cost_thb": 21544.0,
+      "trucks": 113,
+      "wait_to_weigh_mean_min": 5.8,
+      "wait_to_weigh_max_min": 14.9,
+      "turnaround_mean_min": 38.5,
+      "delivered_unripe_pct": 3.61,
+      "harvest_to_mill_h": 18.6,
+      "cpo_lot": "CPO-20261021-T1",
+      "lot_ffa_pct": 2.907,
+      "lot_dobi": 3.09
+    },
+    "alerts": [
+      {
+        "code": "ALR-20261115-0016",
+        "severity": "medium",
+        "module": "maintenance",
+        "equipment": "PRS-03",
+        "title": "PRS-03-VIB-DE HIGH: Twin-screw press 3 drive-end vibration (RMS velocity)",
+        "raised_local": "2026-11-15 14:30:00"
+      },
+      {
+        "code": "ALR-20261119-0018",
+        "severity": "critical",
+        "module": "maintenance",
+        "equipment": "PRS-03",
+        "title": "PRS-03-VIB-DE HIGH-HIGH (critical): Twin-screw press 3 drive-end vibration (RMS velocity)",
+        "raised_local": "2026-11-19 10:20:00"
+      },
+      {
+        "code": "ALR-20261120-0019",
+        "severity": "high",
+        "module": "maintenance",
+        "equipment": "PRS-03",
+        "title": "PRS-03-TMP-BRG HIGH: Twin-screw press 3 bearing temperature",
+        "raised_local": "2026-11-20 11:40:00"
+      }
+    ],
+    "focus_batches": {
+      "count": 8,
+      "lowest_oer": [
+        {
+          "code": "PB-20261120-20",
+          "oer_pct": 17.8943
+        },
+        {
+          "code": "PB-20261120-16",
+          "oer_pct": 17.9374
+        },
+        {
+          "code": "PB-20261120-08",
+          "oer_pct": 18.2083
+        }
+      ]
+    },
+    "sensors": {
+      "PRS-03-VIB-DE": {
+        "focus": 5.316,
+        "baseline": 1.803,
+        "agg": "max"
+      },
+      "PRS-03-TMP-BRG": {
+        "focus": 88.515,
+        "baseline": 65.363,
+        "agg": "max"
+      },
+      "PRS-03-CUR": {
+        "focus": 129.393,
+        "baseline": 119.562,
+        "agg": "mean"
+      },
+      "PRS-01-VIB-DE": {
+        "focus": 1.782,
+        "baseline": 1.754,
+        "agg": "max"
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+# STATUS: configured, NOT verified (Docker daemon unavailable in the build environment).
+# Default: SQLite inside the api container.   docker compose -f infra/docker/docker-compose.yml up --build
+# PostgreSQL:                                  docker compose -f infra/docker/docker-compose.yml --profile postgres up --build
+#   (and set DATABASE_URL=postgresql+psycopg://dml:dml@db:5432/dml_demo, plus add psycopg[binary] to the API image)
+name: digital-mill-lab
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/api.Dockerfile
+    environment:
+      APP_ENV: demo
+      DEMO_MODE: "true"
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///data/demo.db}
+      DEMO_ANCHOR: ${DEMO_ANCHOR:-2026-11-20}
+      RATE_LIMIT_ENABLED: "true"
+      # QA-21: Next.js passes the client's X-Forwarded-For through unchanged, so with Next.js as the only hop it must NOT be trusted.
+      # Behind a real reverse proxy that appends the client address (nginx/Caddy), set TRUST_PROXY_HEADERS=true and TRUSTED_PROXY_HOPS=1.
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-false}
+      TRUSTED_PROXY_HOPS: ${TRUSTED_PROXY_HOPS:-1}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-3}
+      LLM_PROVIDER: ${LLM_PROVIDER:-none}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      ALLOWED_ORIGINS: http://localhost:3000
+    ports:
+      - "8000:8000"
+    volumes:
+      - api-data:/srv/app/data/dev
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/docker/web.Dockerfile
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    profiles: ["postgres"]
+    environment:
+      POSTGRES_USER: dml
+      POSTGRES_PASSWORD: dml  # local demo only - not a secret
+      POSTGRES_DB: dml_demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dml -d dml_demo"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  api-data:
+  pg-data:

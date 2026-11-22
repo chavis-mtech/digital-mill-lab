@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pc-ai-api"
+version = "0.1.0"
+description = "Digital Mill Lab API - independent concept demo on synthetic data (not an official system of any company)."
+requires-python = ">=3.12,<3.13"
+# Exact pins live in requirements.lock (pip freeze). These are the direct dependencies.
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "sqlalchemy>=2",
+  "alembic",
+  "pydantic>=2",
+  "pydantic-settings",
+  "pandas",
+  "numpy",
+  "scikit-learn",
+  "joblib",
+  "scipy",
+  "python-multipart",
+  "httpx",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "W"]
+# B008: FastAPI Depends()/Query() in defaults is idiomatic. E501: long route decorators read better unwrapped.
+# UP046: keep Generic[T] for the pydantic Page model (explicit, widely understood).
+ignore = ["B008", "E501", "UP046"]
+
+[tool.ruff.lint.isort]
+known-third-party = ["alembic"]  # the local alembic/ migrations dir must not shadow the package

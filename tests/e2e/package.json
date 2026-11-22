@@ -1,0 +1,15 @@
+{
+  "name": "dml-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "description": "End-to-end acceptance tests (scenarios A-E) against locally running web + API servers. Kept outside the pnpm workspace on purpose.",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "servers": "bash ./run-servers.sh"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.65.1"
+  }
+}

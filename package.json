@@ -1,0 +1,20 @@
+{
+  "name": "digital-mill-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Digital Mill Lab - independent portfolio concept demo (synthetic data). Not an official system of any company.",
+  "packageManager": "pnpm@11.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "setup": "make setup",
+    "dev": "make dev",
+    "test": "make test",
+    "lint": "make lint",
+    "contracts": "make contracts",
+    "dev:web": "pnpm --filter ./apps/web dev",
+    "build:web": "pnpm --filter ./apps/web build",
+    "contracts:ts": "pnpm --filter @dml/contracts generate"
+  }
+}
