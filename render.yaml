@@ -1,26 +1,34 @@
-# Render Blueprint for the API (the web app goes to Vercel; see docs/DEPLOYMENT.md section 9).
-# STATUS: written from the Docker image that CI builds and smoke-tests; NEVER deployed on Render by the author.
+# Render Blueprint for the API (the web app goes to Vercel; see docs/DEPLOYMENT.md section 11).
+# The API image is built ONCE by GitHub Actions (job "docker" in .github/workflows/ci.yml) and published to
+#   ghcr.io/chavis-mtech/digital-mill-lab-api
+# so Render only pulls it. Building it on Render's free plan was still running after 42 minutes (seeding the dataset needs ~1 GB of RAM
+# and training the models is CPU heavy), so that route is not used.
 #
-# Memory facts measured on the author's machine (peak resident set):
-#   dataset seeding  ~940 MB   (happens while the image is BUILT, not at run time)
-#   model training   ~350 MB   (also at image build time)
-#   API at run time  ~240 MB   (one worker, after serving real requests)
-# A 512 MB plan can RUN the API but may not be able to BUILD the image. If the build is killed, either use a plan with more
-# build memory, or build the image in CI and deploy it from a registry (docs/DEPLOYMENT.md section 9, "Plan B").
+# STATUS: written from Render's Blueprint reference; not yet deployed from this file.
+#
+# Before you apply it: the package is PRIVATE (the repository is private). In Render add a registry credential
+# (Workspace Settings -> Registry Credentials -> GitHub Container Registry; user = your GitHub user name; password = a classic personal access
+# token with ONLY the read:packages scope) named "ghcr-credentials", or make the package public in GitHub if you are happy for the API code
+# inside the image to be public.
+#
+# Prebuilt-image services are NOT auto-deployed: after CI publishes a new image, use "Manual Deploy" in Render.
 services:
   - type: web
     name: digital-mill-lab-api
-    runtime: docker
-    dockerfilePath: ./infra/docker/api.Dockerfile
-    dockerContext: .
-    plan: free            # sleeps after ~15 min idle (about a minute to wake). Use a paid plan for an always-on demo.
+    runtime: image
+    image:
+      url: ghcr.io/chavis-mtech/digital-mill-lab-api:latest
+      creds:
+        fromRegistryCreds:
+          name: ghcr-credentials
+    plan: free            # 0.1 CPU, 512 MB; sleeps after ~15 min idle (about a minute to wake). Slow for a demo: use a paid plan for real use.
     healthCheckPath: /health
-    autoDeploy: true
+    autoDeploy: false
     envVars:
       - key: PORT
         value: "8000"     # the image listens on 8000
       - key: WEB_CONCURRENCY
-        value: "1"        # one worker keeps memory low; raise on a bigger plan
+        value: "1"        # one worker keeps memory low (API needs ~240 MB at run time)
       - key: APP_ENV
         value: demo
       - key: DEMO_MODE

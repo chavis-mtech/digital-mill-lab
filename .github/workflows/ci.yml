@@ -90,6 +90,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    permissions:
+      contents: read
+      packages: write   # push the API image to GitHub Container Registry (private package by default)
     steps:
       - uses: actions/checkout@v4
       - name: Build API image (dataset is seeded and models are trained at build time)
@@ -110,6 +113,17 @@ jobs:
           curl -fsS http://127.0.0.1:3000/ | grep -q "Digital Mill Lab"
           curl -fsS http://127.0.0.1:3000/api/v1/meta | python3 -c "import json,sys; json.load(sys.stdin); print('web proxy to api OK')"
           curl -fsS http://127.0.0.1:3000/docs/architecture | grep -qi "architecture"
+      # Hosts with little CPU/RAM cannot build this image themselves (seeding needs ~1 GB; training is CPU heavy): a free
+      # Render instance was still building after 42 minutes. CI builds it once and publishes it; the host only pulls it.
+      - name: Publish the API image to GHCR (main branch only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          IMG=ghcr.io/${{ github.repository_owner }}/digital-mill-lab-api
+          docker tag dml-api "$IMG:latest"
+          docker tag dml-api "$IMG:${{ github.sha }}"
+          docker push "$IMG:latest"
+          docker push "$IMG:${{ github.sha }}"
       - name: Container logs on failure
         if: failure()
         run: |

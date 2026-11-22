@@ -204,12 +204,18 @@ database, which exceeds the size limits of Vercel's functions. The API therefore
 (one worker). Seeding and training happen when the image is *built*. A 512 MB host can therefore run the API but may fail to build it.
 
 ### Step 1 — the API (container host; `render.yaml` is provided for Render)
-1. Wait for the CI `docker` job to be green: it builds both images on GitHub's runners and smoke-tests them (health, 12 KPIs, alerts, web proxy).
-2. Render: *New → Blueprint* → pick the repository → it reads `render.yaml`. Free plan: sleeps after ~15 minutes idle (about a minute to wake;
-   the first visitor after a quiet period waits). A paid plan keeps it awake.
-3. Note the service URL, for example `https://digital-mill-lab-api.onrender.com`. Check `<url>/health` and `<url>/api/v1/meta`.
-4. **Plan B if the image build is killed for memory:** build the image in CI (it already is) and deploy it from a registry instead of building on the
-   host, or choose a plan with more build memory. Not tried.
+**Observed 2026-11-22:** letting Render build the image on its free plan was still running after **42 minutes** (seeding needs ~1 GB of RAM and
+training is CPU heavy). So the API image is built once in CI and the host only pulls it.
+1. CI (job `docker`) builds the image, smoke-tests it and, on `main`, publishes `ghcr.io/<owner>/digital-mill-lab-api:latest` (and a `:<commit sha>` tag).
+   The package is private by default (the repository is private).
+2. In Render create a **registry credential** (Workspace Settings → Registry Credentials → GitHub Container Registry): user = your GitHub user name,
+   password = a *classic* personal access token with **only** `read:packages`. Name it `ghcr-credentials`. (Alternative with no credential: make the
+   package public in GitHub — only if you are happy for the API source inside the image to be public.)
+3. Render: *New → Blueprint* → pick the repository (it reads `render.yaml`, `runtime: image`) → Apply. Or *New → Web Service → Existing image* and paste the image URL.
+   Prebuilt-image services are **not** auto-deployed: after a new image is published, press *Manual Deploy*.
+4. Free plan: 0.1 CPU and 512 MB RAM, sleeps after ~15 minutes idle (about a minute to wake). Expect a slow first page because one page fires 13–20 API
+   calls; a paid plan with more CPU is the realistic option for a demo you send to people.
+5. Note the service URL, for example `https://digital-mill-lab-api.onrender.com`; check `<url>/health` and `<url>/api/v1/meta`.
 
 ### Step 2 — the web app (Vercel)
 1. *Add New → Project* → import the repository (grant the Vercel GitHub app access to it).
