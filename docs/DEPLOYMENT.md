@@ -28,7 +28,7 @@ should not be exposed publicly on its own port.
 
 ## 3. Rate limiting behind proxies (read before exposing anything)
 
-The API limits requests per client IP (240/min, burst 40) and per `X-Demo-Session` (120/min). Behind proxies the TCP peer
+The API limits requests per client IP (1800/min, burst 200) and per `X-Demo-Session` (300/min, burst 100). Behind proxies the TCP peer
 is always the proxy, so the client IP must come from `X-Forwarded-For` (XFF):
 
 * `TRUST_PROXY_HEADERS=true` makes the API read XFF at all (never enable it if clients can reach the API directly).
@@ -85,9 +85,9 @@ same via the LAN interface address  -> unchanged (no peer address appended)
 | `DATASET_DAYS` | `120` | Dataset window length |
 | `MILL_TIMEZONE` | `Asia/Bangkok` | Business-day timezone |
 | `RATE_LIMIT_ENABLED` | `true` | Keep `true` in any exposed deployment |
-| `RATE_LIMIT_PER_IP_PER_MINUTE` | `240` | Per client IP (see §3) |
-| `RATE_LIMIT_PER_SESSION_PER_MINUTE` | `120` | Per `X-Demo-Session` |
-| `RATE_LIMIT_BURST` | `40` | Bucket size (session bucket = burst / 2) |
+| `RATE_LIMIT_PER_IP_PER_MINUTE` | `1800` | Per client IP (see §3); behind the web proxy this is one bucket for all visitors |
+| `RATE_LIMIT_PER_SESSION_PER_MINUTE` | `300` | Per `X-Demo-Session` |
+| `RATE_LIMIT_BURST` | `200` | Bucket size (session bucket = burst / 2 = 100). One demo page load fires 6 to 13 requests (measured) |
 | `TRUST_PROXY_HEADERS` | `false` | Read `X-Forwarded-For` (only behind trusted proxies) |
 | `TRUSTED_PROXY_HOPS` | `1` | Trusted appending proxies in front of the API (§3) |
 | `LLM_PROVIDER` | `none` | `none` = deterministic Copilot. `openai_compatible` / `anthropic` never tested against a real provider |
@@ -194,7 +194,7 @@ median 252 ms with 4 workers vs 539 ms with 1, on the busy machine), put a short
 * `audit_logs` is append-only and is not cleared by resets; it grows with visitor activity (verification is incremental above 20,000 rows).
   To start fresh, rebuild the database.
 
-## 11. Public demo: Vercel (web) + a container host (API) — deployed 2026-11-23 on free tiers (one open defect, see the end)
+## 11. Public demo: Vercel (web) + a container host (API) — deployed 2026-11-23 on free tiers (rate-limit fix awaiting verification, see the end)
 
 **Why two hosts.** Vercel runs the Next.js web app. It cannot run the API: the API needs Python with pandas/scikit-learn and a ~160 MB SQLite
 database, which exceeds the size limits of Vercel's functions. The API therefore runs as a container on another host, and the web app proxies
@@ -215,7 +215,7 @@ training is CPU heavy). So the API image is built once in CI and the host only p
    Prebuilt-image services are **not** auto-deployed: after a new image is published, press *Manual Deploy*.
 4. Free plan: 0.1 CPU and 512 MB RAM, sleeps after ~15 minutes idle (Render warns of delays of 50 seconds or more). **Observed 2026-11-23:** pulling and starting
    the prebuilt image took 36.5 s. Single requests through the Vercel proxy took 0.4 s (`meta`, `alerts`), 2.3 s (`executive/kpis`, `maintenance/equipment`) and
-   5.4 s (`executive/overview`), so a page that fires 20 or more requests loads slowly. A paid plan with more CPU is the realistic option for a demo you send to people.
+   5.4 s (`executive/overview`), so a page (6 to 13 requests, measured) loads slowly. A paid plan with more CPU is the realistic option for a demo you send to people.
 5. Note the service URL; check `<url>/health` and `<url>/api/v1/meta`. **Observed:** the service was created by hand with the dashboard's *Existing image* form, using the same image and
    environment values as `render.yaml` (the Blueprint file itself was not applied); its URL is `https://digital-mill-lab-api-latest.onrender.com`. `/health` returned `ok`, `/api/v1/meta` returned the product name and the KPI
    endpoints returned data.
@@ -240,12 +240,16 @@ training is CPU heavy). So the API image is built once in CI and the host only p
   (already set in `render.yaml`). `POST /demo/reset-all` is refused when `APP_ENV=demo` (it would let any visitor clear everyone's sandbox).
 * Vercel *Deployment Protection* may put preview URLs behind a login; production domains are public. The demo is intended to be public.
 
-### Open defect: rate limit smaller than one page load (found 2026-11-23)
-The limiter's default buckets (one session: burst 20, 120 per minute; one IP: burst 40, 240 per minute) are smaller than the number of requests one demo page fires.
-Reproduced through the Vercel proxy: 30 parallel requests with one session id gave 20 successes and 10 HTTP 429 responses (scope `session`); five sessions with 20 requests
-each gave 60 successes and 40 refusals (the IP bucket). Because `TRUST_PROXY_HEADERS=false`, every visitor shares one IP bucket. Raising `RATE_LIMIT_BURST`,
-`RATE_LIMIT_PER_SESSION_PER_MINUTE` and `RATE_LIMIT_PER_IP_PER_MINUTE` through Render environment variables had not changed the observed limits when last checked; the cause was not
-established. The intended fix is in code (a separate session burst sized for a page load, with a test that replays one page).
+### Rate limit too small for a shared proxy address (found 2026-11-23; fixed in code, not yet verified on the public deployment)
+After the first public deployment some demo requests got HTTP 429. **Measured cause** (Playwright against the production web build, 16 demo pages): one page load fires 6 to 13 API requests, all
+within one second, and one visitor browsing page after page uses about 90 requests a minute. The old defaults (per IP: burst 40, 240 per minute; per session: burst 20, 120 per minute) suit one
+visitor but not the real setup: with `TRUST_PROXY_HEADERS=false` every request reaches the API through the web host's proxy, so **all visitors share one IP bucket**, and three quick page reloads empty it.
+(An earlier version of this note said one page fires more than 20 requests; that was an assumption, and the measurement shows 13 at most.) Reproduced on the public deployment with artificial bursts:
+30 parallel requests with one session id gave 20 successes and 10 refusals (scope `session`); five sessions with 20 requests each gave 60 successes and 40 refusals (the IP bucket).
+**Fix:** the defaults are now per IP burst 200 / 1800 per minute and per session burst 100 / 300 per minute (about fifteen page loads at the same moment for the whole site, seven reloads for one visitor),
+with tests that replay a 13-request page load against the shipped defaults (`apps/ai-api/tests/test_ratelimit.py`; they fail with the old numbers). The prebuilt-image Render service does not auto-deploy:
+press *Manual Deploy* after CI publishes the new image, then repeat the burst check. **Remaining limit:** one abusive client behind the shared address can still use up the shared bucket (the price of
+`TRUST_PROXY_HEADERS=false`); fixing that needs the real client address from a trusted proxy chain (section 3).
 
 ### Not verified
 The browser tests have not been run against the public URL. The time a sleeping Render instance needs to wake, and whether Vercel's proxy waits that long, were not measured.

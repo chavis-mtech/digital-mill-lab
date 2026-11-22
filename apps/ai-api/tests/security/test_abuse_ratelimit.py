@@ -22,7 +22,7 @@ def _limited_client(**kw):
 
 
 def test_burst_of_200_requests_is_throttled_with_envelope_and_retry_after():
-    c = _limited_client()  # shipped defaults: 240/min per IP, burst 40
+    c = _limited_client(rate_limit_per_ip_per_minute=240, rate_limit_burst=40)  # pinned: this tests the mechanism, not the shipped defaults
     t0 = time.perf_counter()
     codes = [c.get("/api/v1/meta").status_code for _ in range(200)]
     elapsed = time.perf_counter() - t0

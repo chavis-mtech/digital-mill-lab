@@ -12,7 +12,7 @@
 | Base path | `/api/v1` (plus `/health` liveness and `/ready` readiness at the root) |
 | Format | JSON, `snake_case`, datetimes ISO-8601 UTC (`Z`) |
 | Through the web app | The browser calls `/api/v1/*` on the web origin; Next.js proxies to the API (same origin, no CORS) |
-| Rate limit | Token bucket per client IP (240/min, burst 40) and per `X-Demo-Session` (120/min) -> `429 rate_limited` + `Retry-After` |
+| Rate limit | Token bucket per client IP (1800/min, burst 200) and per `X-Demo-Session` (300/min, burst 100) -> `429 rate_limited` + `Retry-After` |
 | Body size | JSON bodies above 256 KiB -> `413` (upload route: 5 MiB + 1 MiB) |
 
 ## 2. Headers

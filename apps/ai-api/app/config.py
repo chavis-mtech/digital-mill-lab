@@ -55,10 +55,15 @@ class Settings(BaseSettings):
     dataset_days: int = Field(default=120, ge=7, le=1000)
     mill_timezone: str = "Asia/Bangkok"
 
+    # Sized from a measurement (2026-11-23, production web build, 16 demo pages): one page load fires 6-13 API requests, all within
+    # one second, and one visitor browsing page after page uses about 90 requests a minute. Behind the web app's proxy every visitor
+    # reaches the API from the same address (TRUST_PROXY_HEADERS=false), so the per-IP bucket is shared by ALL visitors and must hold
+    # several page loads at once. The session bucket is `burst // 2`, i.e. 100 requests (about seven page loads) at 5 per second.
+    # The earlier defaults (240 per minute, burst 40, so 20 per session) were drained by three quick page reloads.
     rate_limit_enabled: bool = True
-    rate_limit_per_ip_per_minute: int = Field(default=240, ge=1)
-    rate_limit_per_session_per_minute: int = Field(default=120, ge=1)
-    rate_limit_burst: int = Field(default=40, ge=1)
+    rate_limit_per_ip_per_minute: int = Field(default=1800, ge=1)
+    rate_limit_per_session_per_minute: int = Field(default=300, ge=1)
+    rate_limit_burst: int = Field(default=200, ge=1)
     trust_proxy_headers: bool = False  # honour X-Forwarded-For only behind a trusted reverse proxy
     # SQLite WAL + busy timeout for file databases. OFF by default: switching to WAL rewrites the database file header, which
     # development and tests must not do to the canonical data/demo.db. The Docker entrypoint turns it on for multi-worker serving.

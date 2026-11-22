@@ -15,7 +15,7 @@ case "${DATABASE_URL:-}" in
     ;;
 esac
 
-# Several worker processes: a page fires ~20 parallel requests and one worker serialises them (measured by the
+# Several worker processes: a page fires 6-13 parallel requests (measured) and one worker serialises them (measured by the
 # web-verifier and QA). Rate-limit buckets are per process, so the effective limit is WEB_CONCURRENCY times higher.
 export SQLITE_WAL="${SQLITE_WAL:-true}"  # several processes share the SQLite file: WAL + busy timeout
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --workers "${WEB_CONCURRENCY:-3}"

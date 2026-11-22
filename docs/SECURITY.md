@@ -61,7 +61,7 @@ All test paths are under `apps/ai-api/tests/`. Counts are collected test items (
 
 | Control | Test |
 |---|---|
-| Token-bucket rate limit per client IP (240/min, burst 40) and per `X-Demo-Session` (120/min); 429 envelope + `Retry-After`; spoofed `X-Forwarded-For` ignored unless `TRUST_PROXY_HEADERS=true` | `security/test_abuse_ratelimit.py` (11) |
+| Token-bucket rate limit per client IP (1800/min, burst 200) and per `X-Demo-Session` (300/min, burst 100); 429 envelope + `Retry-After`; spoofed `X-Forwarded-For` ignored unless `TRUST_PROXY_HEADERS=true` | `security/test_abuse_ratelimit.py` (11) |
 | Behind proxies: client IP = `TRUSTED_PROXY_HOPS`-th `X-Forwarded-For` entry from the right; spoofed prefixes ignored; too-short header -> TCP peer (QA-13, QA-20) | `security/test_proxy_hops.py` (12) |
 | Request body cap 256 KiB (`MAX_BODY_BYTES`), enforced before parsing, also for chunked bodies -> 413 | `security/test_http_hardening.py` (45) |
 | Every list parameter has `limit <= 200/1000`; queue-simulation policies bounded (QA-12); expensive read params bounded | `security/test_abuse_inputs.py` (148) |

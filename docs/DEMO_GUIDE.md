@@ -113,7 +113,7 @@ Last result (2026-11-22): `20 passed (1.9m)`. This count includes two `test.fail
   - The Thai rubber-price question after "which machine first" returns the CLR-01 answer.
   - Cause: `apps/ai-api/app/copilot/router.py` `route()`. Workaround: use **New conversation** before each question.
 - The Copilot OER answer lists the same KB citation twice.
-- **Rate limit.** All visitors behind one proxy share the per-IP budget (240/min, burst 40). A fast click-through can show 429 error states.
+- **Rate limit.** All visitors behind one proxy share the per-IP budget (1800/min, burst 200: about fifteen page loads at the same moment). A very fast click-through by many visitors can still show 429 error states.
 - **Performance.** The API runs as one uvicorn worker. A dashboard fires about 20 requests at once, so the executive page needs ~1.8 s to show data, the process twin ~0.8 s and the Copilot ~0.25 s. With 4 workers the executive page drops to ~0.9 s and the process twin to ~0.3 s. About 1.7 MB of decoded JS loads on chart pages.
 - In work-order details, the audit-trail times are wall-clock times, while the status history uses the demo clock.
 - The work-order list has no provenance badge (the API returns none). The page explains that it shows baseline plus session records.

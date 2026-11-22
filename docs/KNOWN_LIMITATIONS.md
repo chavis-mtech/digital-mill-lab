@@ -70,12 +70,11 @@
 
 * **No real integrations.** No SCADA/DCS/historian, ERP, weighbridge, LIMS or SSO connection. Integration contracts in
   `docs/architecture/INTEGRATION_CONTRACTS.md` are future designs.
-* **Deployment is on free tiers and has an open defect.** The web app runs on Vercel and the API on Render's free plan (https://digital-mill-lab-web.vercel.app, deployed 2026-11-23).
-  The free API has 0.1 CPU and sleeps when idle: single requests measured 0.4 s to 5.4 s, so a page that fires 20 or more requests loads slowly, and the first
-  request after idle can take a minute or more. **Open defect:** with the rate limiter on, the default bucket for one session (burst 20) is smaller than the requests
-  one page fires, so some of them get HTTP 429 (reproduced 2026-11-23: 30 parallel requests with one session id gave 20 successes and 10 refusals). The browser tests
-  have not been run against the public URL. The Docker images were built and smoke-tested on GitHub Actions (2026-11-22); the docker-compose file itself was never run;
-  PostgreSQL support is only checked as offline DDL.
+* **Deployment is on free tiers; a rate-limit fix is not yet verified there.** The web app runs on Vercel and the API on Render's free plan (https://digital-mill-lab-web.vercel.app, deployed 2026-11-23).
+  The free API has 0.1 CPU and sleeps when idle: single requests measured 0.4 s to 5.4 s and one page fires 6 to 13 of them, so pages load slowly, and the first request after idle can take a minute or more.
+  After the first deployment the demo pages got HTTP 429: the old limiter defaults were too small for the one address that all visitors share behind the web proxy (measured cause: docs/DEPLOYMENT.md section 11).
+  The defaults were raised and tests added; the running instance must be redeployed with the new image before the fix shows, and it has not been re-checked yet. The browser tests have not been run against the public URL.
+  The Docker images were built and smoke-tested on GitHub Actions (2026-11-22); the docker-compose file itself was never run; PostgreSQL support is only checked as offline DDL.
 * **Single-process performance.** Heavy analytics endpoints (overview, KPIs, twin, equipment list, recommendations) take 75–210 ms alone but
   drop to 0.4–0.7 requests/s at 10 concurrent requests in one process (p50 15–23 s), measured on a shared, heavily loaded machine (QA-22,
   numbers in `docs/DEPLOYMENT.md` §8). Until QA-19 (2026-11-22) more than 15 concurrent requests produced HTTP 500 after a 30 s pool wait.

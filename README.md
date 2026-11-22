@@ -8,7 +8,7 @@ maintenance AI with work orders, logistics queue analysis, energy, traceability,
 Copilot — all computed by one Python API from a 120-day synthetic dataset with embedded scenario episodes. The AI is
 advisory and read-only: it never controls machines, and roles are simulated viewpoints, not real accounts.
 
-What this demo is **not**: it is not connected to any real system, its public deployment runs on free tiers (slow, with a known rate-limit defect; live demo: https://digital-mill-lab-web.vercel.app), several models do not beat
+What this demo is **not**: it is not connected to any real system, its public deployment runs on free tiers (slow; a rate-limit fix awaits a redeploy; live demo: https://digital-mill-lab-web.vercel.app), several models do not beat
 their naive baselines (and say so), and the CI and Docker images were built and smoke-tested on GitHub Actions (PostgreSQL is not verified). See
 [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 
@@ -87,7 +87,7 @@ docs/                 product, architecture, AI, security and portfolio document
 | Copilot (deterministic router, grounded answers, refusals) | implemented; LLM mode never run against a real provider |
 | CV FFB grading | prototype (no dataset, no accuracy) |
 | Docker images, CI | built and passing on GitHub Actions (2026-11-22); docker-compose file and PostgreSQL not verified |
-| Public deployment | live on free tiers since 2026-11-23: web on Vercel, API on Render; public-URL e2e not run; rate-limit defect open ([DEPLOYMENT](docs/DEPLOYMENT.md) section 11) |
+| Public deployment | live on free tiers since 2026-11-23: web on Vercel, API on Render; public-URL e2e not run; rate-limit fix committed, not yet verified there ([DEPLOYMENT](docs/DEPLOYMENT.md) section 11) |
 
 Test evidence and open defects: [SECURITY](docs/SECURITY.md) and [KNOWN_LIMITATIONS](docs/KNOWN_LIMITATIONS.md).
 
