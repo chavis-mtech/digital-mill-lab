@@ -18,6 +18,10 @@ from .support import assert_clean_error, hdr, make_client, new_session, prepare_
 
 
 def _limited_client(**kw):
+    # These tests exercise the limiter's mechanism with the original small buckets; the shipped defaults are larger (see tests/test_ratelimit.py).
+    kw.setdefault("rate_limit_per_ip_per_minute", 240)
+    kw.setdefault("rate_limit_per_session_per_minute", 120)
+    kw.setdefault("rate_limit_burst", 40)
     return make_client(prepare_db("qa-rl"), rate_limit_enabled=True, **kw)
 
 

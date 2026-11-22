@@ -55,7 +55,9 @@ def test_setting_is_validated_and_defaults_to_one():
 
 
 def test_two_hops_end_to_end_separate_buckets_and_spoofing_does_not_help():
-    c = make_client(prepare_db("qa-rl"), rate_limit_enabled=True, trust_proxy_headers=True, trusted_proxy_hops=2)
+    c = make_client(  # pinned small buckets: this tests proxy-hop handling, not the shipped defaults
+        prepare_db("qa-rl"), rate_limit_enabled=True, rate_limit_per_ip_per_minute=240, rate_limit_per_session_per_minute=120, rate_limit_burst=40, trust_proxy_headers=True, trusted_proxy_hops=2
+    )
     proxy = "10.0.0.5"  # the inner appending proxy saw the outer proxy - identical for every visitor
     # attacker rotates the spoofable prefix: still one bucket (its real address 203.0.113.7)
     codes = [c.get("/api/v1/meta", headers={"X-Forwarded-For": f"198.51.100.{i % 250}, 203.0.113.7, {proxy}"}).status_code for i in range(120)]
